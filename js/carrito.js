@@ -20,7 +20,7 @@ function agregarAlCarrito(codigo, cantidad) {
 
   if (producto === undefined) {
     console.error("Producto no encontrado:", codigo);
-    return;
+    return false;
   }
 
   const carrito = obtenerCarrito();
@@ -34,7 +34,7 @@ function agregarAlCarrito(codigo, cantidad) {
 
   if (cantidadNueva > producto.stock) {
     alert("No hay suficiente stock. Disponible: " + producto.stock);
-    return;
+    return false;
   }
 
   if (itemExistente) {
@@ -44,6 +44,16 @@ function agregarAlCarrito(codigo, cantidad) {
   }
 
   guardarCarrito(carrito);
+  return true;
+}
+
+// Botón "Añadir" de las tarjetas: agrega 1 unidad y avisa SOLO si se pudo agregar
+// (antes avisaba "agregado" incluso cuando no había stock)
+function agregarYAvisar(codigo) {
+  if (agregarAlCarrito(codigo, 1)) {
+    actualizarContadorCarrito();
+    alert("Producto agregado al carrito");
+  }
 }
 // Elimina por completo un producto del carrito
 function quitarDelCarrito(codigo) {
@@ -98,6 +108,8 @@ function calcularTotal() {
       return p.codigo === item.codigo;
     });
 
+    if (!producto) return; // el producto ya no existe en el catálogo: no se suma
+
     total = total + producto.precioResidencial * item.cantidad;
   });
 
@@ -114,7 +126,7 @@ function actualizarContadorCarrito() {
   });
 
   const contador = document.getElementById("contadorCarrito");
-  contador.textContent = totalUnidades;
+  if (contador) contador.textContent = totalUnidades;
 }
 
 actualizarContadorCarrito();

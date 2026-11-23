@@ -123,6 +123,12 @@ document.addEventListener("DOMContentLoaded", () => {
     elementoError.textContent = "";
   }
 
+  // Si nos mandaron aquí desde una página que solo es para el personal, se explica por qué
+  if (new URLSearchParams(window.location.search).get("aviso") === "staff") {
+    mensajeGeneral.className = "mensaje-alerta error";
+    mensajeGeneral.textContent = "Esa página es solo para el personal. Inicia sesión como Administrador o Vendedor.";
+  }
+
   inputCorreo.addEventListener("input", validarCorreoFormato);
   inputCorreo.addEventListener("blur", validarCorreoFormato);
 
@@ -154,25 +160,53 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     if (usuarioEncontrado) {
-      // Éxito: Guardar sesión activa con su ROL REAL
-      localStorage.setItem("usuarioActivo", JSON.stringify({
-        run: usuarioEncontrado.run,
-        nombre: `${usuarioEncontrado.nombre} ${usuarioEncontrado.apellidos}`,
-        correo: usuarioEncontrado.correo,
-        rol: usuarioEncontrado.tipoUsuario || "Cliente"
-      }));
+      const esPersonal = usuarioEncontrado.tipoUsuario === "Administrador" || usuarioEncontrado.tipoUsuario === "Vendedor";
 
-      mensajeGeneral.className = "mensaje-alerta exito";
-      mensajeGeneral.textContent = `¡Bienvenido/a ${usuarioEncontrado.nombre}! (Rol: ${usuarioEncontrado.tipoUsuario}). Redirigiendo...`;
-
-      // Redirigir según el rol
-      setTimeout(() => {
-        if (usuarioEncontrado.tipoUsuario === "Administrador" || usuarioEncontrado.tipoUsuario === "Vendedor") {
-          window.location.href = "admin/home.html";
+      // Guarda la sesión activa con su ROL REAL y redirige según el rol
+      const entrar = (tokenStaff) => {
+        localStorage.setItem("usuarioActivo", JSON.stringify({
+          run: usuarioEncontrado.run,
+          nombre: `${usuarioEncontrado.nombre} ${usuarioEncontrado.apellidos}`,
+          correo: usuarioEncontrado.correo,
+          rol: usuarioEncontrado.tipoUsuario || "Cliente"
+        }));
+        if (tokenStaff) {
+          localStorage.setItem("tokenStaff", tokenStaff);
         } else {
-          window.location.href = "index.html";
+          localStorage.removeItem("tokenStaff");
         }
-      }, 1500);
+
+        mensajeGeneral.className = "mensaje-alerta exito";
+        mensajeGeneral.textContent = `¡Bienvenido/a ${usuarioEncontrado.nombre}! (Rol: ${usuarioEncontrado.tipoUsuario}). Redirigiendo...`;
+
+        setTimeout(() => {
+          window.location.href = esPersonal ? "admin/home.html" : "index.html";
+        }, 1500);
+      };
+
+      if (!esPersonal) {
+        entrar(null);
+        return;
+      }
+
+      // El personal además inicia sesión en el servidor: de ahí sale el token que
+      // permite editar productos, ver pedidos y ver el historial.
+      fetch(API_URL + "/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ correo: correoIngresado, password: passwordIngresada })
+      })
+        .then(async (respuesta) => {
+          const datos = await respuesta.json().catch(() => ({}));
+          if (!respuesta.ok) throw new Error(datos.error || "El servidor rechazó el inicio de sesión.");
+          entrar(datos.token);
+        })
+        .catch((error) => {
+          mensajeGeneral.className = "mensaje-alerta error";
+          mensajeGeneral.textContent = error instanceof TypeError
+            ? 'No se pudo conectar con el servidor. ¿Está encendido "node server.cjs"?'
+            : error.message;
+        });
 
     } else {
       // Error de credenciales

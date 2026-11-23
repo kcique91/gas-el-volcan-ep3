@@ -294,3 +294,14 @@ img.imagen-producto-grande {
     background-color: var(--color-primario);
     color: white;
 }
+
+/* EP3: cuando el personal inicia sesión el menú tiene 2 enlaces más (Pedidos, Historial);
+   si no caben en una línea, bajan a la siguiente en vez de cortarse en el borde de la pantalla */
+nav {
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.menu-principal {
+    flex-wrap: wrap;
+}

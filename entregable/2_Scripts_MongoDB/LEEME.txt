@@ -1,0 +1,43 @@
+EP3 BDY1103 - Gas El Volcan - Base de datos no relacional (MongoDB)
+====================================================================
+
+QUE HAY EN ESTA CARPETA
+  00_DEMO_en_orden.js          LA DEMOSTRACION: todos los pasos de la demo en el mismo orden del guion (Rosa, Cristopher, Daniel).
+                               Es el unico script que se pega en la demo; los bloques son los mismos de 02 a 05.
+  01_crear_base_y_datos.js     Crea la base "gas_volcan" con sus colecciones, reglas, indices y datos
+                               (datos de Oracle: 14 productos, 9 clientes, 10 pedidos).
+  02_create.js                 CREATE  : insertOne, insertMany
+  03_read.js                   READ    : find, findOne, operadores, proyecciones, agregaciones
+  04_update.js                 UPDATE  : updateOne, updateMany, replaceOne con $set, $inc, $push, $pull
+  05_delete.js                 DELETE  : deleteOne, deleteMany
+  06_extra_venta_con_control.js  OPCIONAL: las reglas del EP2 (package/triggers) como funciones de mongosh
+
+REQUISITOS
+  MongoDB Server y mongosh instalados y el servidor encendido (por defecto en localhost:27017).
+  Los scripts se probaron con MongoDB 8.3 y mongosh 2.x. Los comandos usados existen desde MongoDB 4.0.
+
+COMO EJECUTARLO
+  1) Abrir una terminal en esta carpeta y crear la base (se puede repetir cuantas veces se quiera,
+     borra la base y la deja como nueva):
+         mongosh --file 01_crear_base_y_datos.js
+  2) Abrir mongosh (escribir:  mongosh ) y pegar los bloques de 02, 03, 04 y 05 de a uno, EN ESE ORDEN.
+     Cada bloque empieza con un comentario "// ---- C1. ..." que dice que hace.
+     (Si algo sale mal o se pegan bloques fuera de orden: volver al paso 1 y empezar de nuevo.)
+
+PARA LA DEMOSTRACION
+  Pegar 01 para dejar la base limpia y despues pegar los PASOS de 00_DEMO_en_orden.js de arriba hacia abajo,
+  de a uno. No hay que escribir nada a mano.
+
+NOTAS
+  - Catalogo de 14 productos, igual al de la tienda web: no se migraron CL005 (balon portatil 2 kg) ni CL006 (recarga
+    del balon) porque no se venden en la web. En los pedidos 4, 5, 9 y 10 esa linea se reemplazo por un producto del
+    catalogo (balon -> manguera 3 m, mismo precio $6.990; recarga -> manguera 1.5 m), asi que los pedidos entregados
+    siguen sumando $147.480. Los pedidos pendientes 5 y 9 bajaron a $23.970 y $7.980.
+  - El detector de gas (AC003) parte con stock 2 y critico 4 (en Oracle: 8 y 2) para que los reportes de stock critico
+    tengan un caso que mostrar. Conteos esperados al final: 02 -> 15 productos; 05 -> 14 productos, 9 clientes, 11 pedidos.
+  - Las fechas de los pedidos 1 a 10 son ilustrativas: en Oracle eran SYSDATE (el dia en que se corrio el script).
+  - MongoDB no tiene triggers como Oracle. El historial de stock y precios se registra desde los mismos comandos
+    (ver 04_update.js). En 06 se muestra como quedaria como funciones.
+  - Equivalencias con Oracle: producto_v -> productos, cliente_v -> clientes,
+    pedido_v + detalle_pedido_v + auditoria_pedido_v -> pedidos (lineas e historial_estados van DENTRO),
+    historial_producto_v -> historial_productos.

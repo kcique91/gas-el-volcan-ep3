@@ -1,4 +1,7 @@
-// Validación y guardado del formulario "Nuevo Producto"
+// Validación y guardado del formulario "Nuevo Producto" (se guarda en MongoDB a través del servidor)
+
+// El catálogo se carga para poder avisar si el código ya existe (el servidor también lo comprueba)
+cargarCatalogo().catch(function () {});
 
 function validarCodigo() {
     const valor = document.getElementById("codigo").value.trim();
@@ -130,9 +133,12 @@ document.getElementById("formProductoNuevo").addEventListener("submit", function
         imagen: document.getElementById("imagen").value.trim()
     };
 
-    PRODUCTOS.push(nuevoProducto);
-    localStorage.setItem("productos", JSON.stringify(PRODUCTOS));
-
-    alert("Producto guardado correctamente.");
-    window.location.href = "productos.html";
+    llamarApi("/productos", { method: "POST", body: nuevoProducto })
+        .then(function () {
+            alert("Producto guardado correctamente.");
+            window.location.href = "productos.html";
+        })
+        .catch(function (error) {
+            alert("❌ No se pudo guardar: " + error.message);
+        });
 });

@@ -1,25 +1,32 @@
-// Lee el producto a editar desde localStorage (clave que pone la tabla de productos.html)
+// Lee el producto a editar desde MongoDB (el código lo deja la tabla de productos.html en localStorage)
 // y precarga el formulario con sus datos actuales
 
 const codigoEditar = localStorage.getItem("codigoProductoEditar");
 
-const producto = PRODUCTOS.find(p => p.codigo === codigoEditar);
+cargarCatalogo()
+    .then(function () {
+        const producto = PRODUCTOS.find(p => p.codigo === codigoEditar);
 
-if (!producto) {
-    alert("No se encontró el producto a editar");
-    window.location.href = "productos.html";
-} else {
-    document.getElementById("codigo").value = producto.codigo;
-    document.getElementById("nombre").value = producto.nombre;
-    document.getElementById("descripcion").value = producto.descripcion || "";
-    document.getElementById("categoria").value = producto.categoria;
-    document.getElementById("unidad").value = producto.unidad;
-    document.getElementById("precioResidencial").value = producto.precioResidencial;
-    document.getElementById("precioComercial").value = producto.precioComercial;
-    document.getElementById("stock").value = producto.stock;
-    document.getElementById("stockCritico").value = producto.stockCritico;
-    document.getElementById("imagen").value = producto.imagen || "";
-}
+        if (!producto) {
+            alert("No se encontró el producto a editar");
+            window.location.href = "productos.html";
+            return;
+        }
+
+        document.getElementById("codigo").value = producto.codigo;
+        document.getElementById("nombre").value = producto.nombre;
+        document.getElementById("descripcion").value = producto.descripcion || "";
+        document.getElementById("categoria").value = producto.categoria;
+        document.getElementById("unidad").value = producto.unidad;
+        document.getElementById("precioResidencial").value = producto.precioResidencial;
+        document.getElementById("precioComercial").value = producto.precioComercial;
+        document.getElementById("stock").value = producto.stock;
+        document.getElementById("stockCritico").value = producto.stockCritico;
+        document.getElementById("imagen").value = producto.imagen || "";
+    })
+    .catch(function (error) {
+        alert("No se pudo cargar el producto desde el servidor: " + error.message);
+    });
 
 function validarNombreEditar() {
     const valor = document.getElementById("nombre").value.trim();
@@ -123,24 +130,26 @@ document.getElementById("formProductoEditar").addEventListener("submit", functio
 
     if (!formularioValido) return;
 
-    const indiceProducto = PRODUCTOS.findIndex(p => p.codigo === codigoEditar);
-    if (indiceProducto === -1) {
-        alert("No se pudo actualizar: el producto ya no existe.");
-        window.location.href = "productos.html";
-        return;
-    }
+    // Se guarda en MongoDB a través del servidor. La base aplica sus reglas de validación
+    // y el servidor deja el registro en el historial si cambió el stock o algún precio.
+    const cambios = {
+        nombre: document.getElementById("nombre").value.trim(),
+        descripcion: document.getElementById("descripcion").value.trim(),
+        categoria: document.getElementById("categoria").value,
+        unidad: document.getElementById("unidad").value,
+        precioResidencial: Number(document.getElementById("precioResidencial").value),
+        precioComercial: Number(document.getElementById("precioComercial").value),
+        stock: Number(document.getElementById("stock").value),
+        stockCritico: document.getElementById("stockCritico").value !== "" ? Number(document.getElementById("stockCritico").value) : 0,
+        imagen: document.getElementById("imagen").value.trim()
+    };
 
-    PRODUCTOS[indiceProducto].nombre = document.getElementById("nombre").value.trim();
-    PRODUCTOS[indiceProducto].descripcion = document.getElementById("descripcion").value.trim();
-    PRODUCTOS[indiceProducto].categoria = document.getElementById("categoria").value;
-    PRODUCTOS[indiceProducto].unidad = document.getElementById("unidad").value;
-    PRODUCTOS[indiceProducto].precioResidencial = Number(document.getElementById("precioResidencial").value);
-    PRODUCTOS[indiceProducto].precioComercial = Number(document.getElementById("precioComercial").value);
-    PRODUCTOS[indiceProducto].stock = Number(document.getElementById("stock").value);
-    PRODUCTOS[indiceProducto].stockCritico = document.getElementById("stockCritico").value !== "" ? Number(document.getElementById("stockCritico").value) : 0;
-    PRODUCTOS[indiceProducto].imagen = document.getElementById("imagen").value.trim();
-
-    localStorage.setItem("productos", JSON.stringify(PRODUCTOS));
-        alert("Producto actualizado correctamente.");
-    window.location.href = "productos.html";
+    llamarApi("/productos/" + encodeURIComponent(codigoEditar), { method: "PUT", body: cambios })
+        .then(function () {
+            alert("Producto actualizado correctamente.");
+            window.location.href = "productos.html";
+        })
+        .catch(function (error) {
+            alert("❌ No se pudo actualizar: " + error.message);
+        });
 });

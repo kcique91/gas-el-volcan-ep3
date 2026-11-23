@@ -1,0 +1,2601 @@
+diff --git a/admin/home.html b/admin/home.html
+index 08371d6..7214e9f 100644
+--- a/admin/home.html
++++ b/admin/home.html
+@@ -6,6 +6,8 @@
+     <title>Administrador - Gas El Volcán</title>
+     <link rel="stylesheet" href="../css/estilos.css">
+     <link rel="stylesheet" href="../css/admin.css">
++    <script src="../js/api.js"></script>
++    <script>exigirStaff("../login.html");</script>
+ </head>
+ <body>
+     <div class="admin-layout">
+@@ -17,8 +19,10 @@
+                 <li><a href="home.html" class="activo">Dashboard</a></li>
+                 <li><a href="productos.html">Productos</a></li>
+                 <li><a href="usuarios.html">Usuarios</a></li>
++                <li><a href="../pedidos.html">Pedidos</a></li>
++                <li><a href="../historial.html">Historial</a></li>
+                 <li><a href="../index.html">Ver sitio normal</a></li>
+-                <li><a href="../index.html" onclick="localStorage.removeItem('usuarioActivo')">Cerrar Sesión</a></li>
++                <li><a href="../index.html" onclick="cerrarSesion()">Cerrar Sesión</a></li>
+             </ul>
+         </aside>
+ 
+diff --git a/admin/producto-editar.html b/admin/producto-editar.html
+index c5d497e..27897b3 100644
+--- a/admin/producto-editar.html
++++ b/admin/producto-editar.html
+@@ -6,6 +6,8 @@
+     <title>Editar Producto - Gas El Volcán</title>
+     <link rel="stylesheet" href="../css/estilos.css">
+     <link rel="stylesheet" href="../css/admin.css">
++    <script src="../js/api.js"></script>
++    <script>exigirStaff("../login.html");</script>
+ </head>
+ <body>
+ 
+@@ -19,6 +21,8 @@
+                 <li><a href="home.html">Dashboard</a></li>
+                 <li><a href="productos.html">Productos</a></li>
+                 <li><a href="usuarios.html">Usuarios</a></li>
++                <li><a href="../pedidos.html">Pedidos</a></li>
++                <li><a href="../historial.html">Historial</a></li>
+             </ul>
+         </aside>
+ 
+diff --git a/admin/producto-nuevo.html b/admin/producto-nuevo.html
+index 8b0a939..55f23b7 100644
+--- a/admin/producto-nuevo.html
++++ b/admin/producto-nuevo.html
+@@ -6,6 +6,8 @@
+     <title>Nuevo Producto - Gas El Volcán</title>
+     <link rel="stylesheet" href="../css/estilos.css">
+     <link rel="stylesheet" href="../css/admin.css">
++    <script src="../js/api.js"></script>
++    <script>exigirStaff("../login.html");</script>
+ </head>
+ <body>
+ 
+@@ -19,6 +21,8 @@
+                 <li><a href="home.html">Dashboard</a></li>
+                 <li><a href="productos.html">Productos</a></li>
+                 <li><a href="usuarios.html">Usuarios</a></li>
++                <li><a href="../pedidos.html">Pedidos</a></li>
++                <li><a href="../historial.html">Historial</a></li>
+             </ul>
+         </aside>
+ 
+diff --git a/admin/productos.html b/admin/productos.html
+index cd8b73e..784c338 100644
+--- a/admin/productos.html
++++ b/admin/productos.html
+@@ -6,6 +6,8 @@
+     <title>Administrador - Productos</title>
+     <link rel="stylesheet" href="../css/estilos.css">
+     <link rel="stylesheet" href="../css/admin.css">
++    <script src="../js/api.js"></script>
++    <script>exigirStaff("../login.html");</script>
+ </head>
+ <body>
+ 
+@@ -19,8 +21,10 @@
+                 <li><a href="home.html">Dashboard</a></li>
+                 <li><a href="productos.html" class="activo">Productos</a></li>
+                 <li><a href="usuarios.html">Usuarios</a></li>
++                <li><a href="../pedidos.html">Pedidos</a></li>
++                <li><a href="../historial.html">Historial</a></li>
+                 <li><a href="../index.html">Ver sitio normal</a></li>
+-                <li><a href="../index.html" onclick="localStorage.removeItem('usuarioActivo')">Cerrar Sesión</a></li>
++                <li><a href="../index.html" onclick="cerrarSesion()">Cerrar Sesión</a></li>
+             </ul>
+         </aside>
+ 
+diff --git a/admin/usuario-editar.html b/admin/usuario-editar.html
+index 7d3e7cd..2530575 100644
+--- a/admin/usuario-editar.html
++++ b/admin/usuario-editar.html
+@@ -6,6 +6,8 @@
+     <title>Editar Usuario - Gas El Volcán</title>
+     <link rel="stylesheet" href="../css/estilos.css">
+     <link rel="stylesheet" href="../css/admin.css">
++    <script src="../js/api.js"></script>
++    <script>exigirStaff("../login.html");</script>
+ </head>
+ <body>
+ 
+@@ -19,6 +21,8 @@
+                 <li><a href="home.html">Dashboard</a></li>
+                 <li><a href="productos.html">Productos</a></li>
+                 <li><a href="usuarios.html">Usuarios</a></li>
++                <li><a href="../pedidos.html">Pedidos</a></li>
++                <li><a href="../historial.html">Historial</a></li>
+             </ul>
+         </aside>
+ 
+diff --git a/admin/usuario-nuevo.html b/admin/usuario-nuevo.html
+index 04966b6..c65ac4d 100644
+--- a/admin/usuario-nuevo.html
++++ b/admin/usuario-nuevo.html
+@@ -6,6 +6,8 @@
+     <title>Nuevo Usuario - Gas El Volcán</title>
+     <link rel="stylesheet" href="../css/estilos.css">
+     <link rel="stylesheet" href="../css/admin.css">
++    <script src="../js/api.js"></script>
++    <script>exigirStaff("../login.html");</script>
+ </head>
+ <body>
+ 
+@@ -19,6 +21,8 @@
+                 <li><a href="home.html">Dashboard</a></li>
+                 <li><a href="productos.html">Productos</a></li>
+                 <li><a href="usuarios.html">Usuarios</a></li>
++                <li><a href="../pedidos.html">Pedidos</a></li>
++                <li><a href="../historial.html">Historial</a></li>
+             </ul>
+         </aside>
+ 
+diff --git a/admin/usuarios.html b/admin/usuarios.html
+index 1ff66a8..be731fc 100644
+--- a/admin/usuarios.html
++++ b/admin/usuarios.html
+@@ -6,6 +6,8 @@
+     <title>Administrador - Usuarios</title>
+     <link rel="stylesheet" href="../css/estilos.css">
+     <link rel="stylesheet" href="../css/admin.css">
++    <script src="../js/api.js"></script>
++    <script>exigirStaff("../login.html");</script>
+ </head>
+ <body>
+ 
+@@ -19,8 +21,10 @@
+                 <li><a href="home.html">Dashboard</a></li>
+                 <li><a href="productos.html">Productos</a></li>
+                 <li><a href="usuarios.html" class="activo">Usuarios</a></li>
++                <li><a href="../pedidos.html">Pedidos</a></li>
++                <li><a href="../historial.html">Historial</a></li>
+                 <li><a href="../index.html">Ver sitio normal</a></li>
+-                <li><a href="../index.html" onclick="localStorage.removeItem('usuarioActivo')">Cerrar Sesión</a></li>
++                <li><a href="../index.html" onclick="cerrarSesion()">Cerrar Sesión</a></li>
+             </ul>
+         </aside>
+ 
+diff --git a/blog-detalle-1.html b/blog-detalle-1.html
+index 4736381..755fed9 100644
+--- a/blog-detalle-1.html
++++ b/blog-detalle-1.html
+@@ -8,30 +8,31 @@
+ </head>
+ <body>
+ <header>
+-<nav>
+-    <div class="logo">
+-        <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+-            <img src="img/logo.jpg" alt="Logo Gas El Volcán" style="height: 70px; width: auto; object-fit: contain; border-radius: 4px;">
+-            <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
+-        </a>
+-    </div>
+-</nav>
+-<input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+-<label for="menu-toggle" class="menu-toggle-btn">☰</label>
+-<ul class="menu-principal">
+-<li><a href="index.html">Home</a></li>
+-<li><a href="productos.html">Productos</a></li>
+-<li><a href="nosotros.html">Nosotros</a></li>
+-<li><a href="blogs.html">Blogs</a></li>
+-<li><a href="contacto.html">Contacto</a></li>
+-</ul>
+-<div class="acciones-usuario">
+-    <a href="login.html">Iniciar sesión</a>
+-    <a href="registro.html">Registrar usuario</a>
+-    <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+-</div>
+-</nav>
+-</header>
++        <nav>
++            <div class="logo">
++                <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
++                    <img src="img/logo.jpg" alt="Logo Gas El Volcán" style="height: 70px; width: auto; object-fit: contain; border-radius: 4px;">
++                    <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
++                </a>
++            </div>
++            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
++            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
++            <ul class="menu-principal">
++                <li><a href="index.html">Home</a></li>
++                <li><a href="productos.html">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
++                <li><a href="nosotros.html">Nosotros</a></li>
++                <li><a href="blogs.html" class="activo">Blogs</a></li>
++                <li><a href="contacto.html">Contacto</a></li>
++            </ul>
++            <div class="acciones-usuario">
++                <a href="login.html">Iniciar sesión</a>
++                <a href="registro.html">Registrar usuario</a>
++                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
++            </div>
++        </nav>
++    </header>
+ <main style="max-width:800px;margin:40px auto;padding:20px;">
+ <h1>¿Sabías que el gas no tiene olor?</h1>
+ <p>El gas licuado es inodoro. El olor fuerte es Mercaptano, un químico agregado a propósito para detectar fugas y evitar accidentes.</p>
+diff --git a/blog-detalle-2.html b/blog-detalle-2.html
+index 09e4ad0..59b7f7a 100644
+--- a/blog-detalle-2.html
++++ b/blog-detalle-2.html
+@@ -8,30 +8,31 @@
+ </head>
+ <body>
+ <header>
+-<nav>
+-    <div class="logo">
+-        <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+-            <img src="img/logo.jpg" alt="Logo Gas El Volcán" style="height: 70px; width: auto; object-fit: contain; border-radius: 4px;">
+-            <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
+-        </a>
+-    </div>
+-</nav>
+-<input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+-<label for="menu-toggle" class="menu-toggle-btn">☰</label>
+-<ul class="menu-principal">
+-<li><a href="index.html">Home</a></li>
+-<li><a href="productos.html">Productos</a></li>
+-<li><a href="nosotros.html">Nosotros</a></li>
+-<li><a href="blogs.html">Blogs</a></li>
+-<li><a href="contacto.html">Contacto</a></li>
+-</ul>
+-<div class="acciones-usuario">
+-    <a href="login.html">Iniciar sesión</a>
+-    <a href="registro.html">Registrar usuario</a>
+-    <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+-</div>
+-</nav>
+-</header>
++        <nav>
++            <div class="logo">
++                <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
++                    <img src="img/logo.jpg" alt="Logo Gas El Volcán" style="height: 70px; width: auto; object-fit: contain; border-radius: 4px;">
++                    <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
++                </a>
++            </div>
++            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
++            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
++            <ul class="menu-principal">
++                <li><a href="index.html">Home</a></li>
++                <li><a href="productos.html">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
++                <li><a href="nosotros.html">Nosotros</a></li>
++                <li><a href="blogs.html" class="activo">Blogs</a></li>
++                <li><a href="contacto.html">Contacto</a></li>
++            </ul>
++            <div class="acciones-usuario">
++                <a href="login.html">Iniciar sesión</a>
++                <a href="registro.html">Registrar usuario</a>
++                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
++            </div>
++        </nav>
++    </header>
+ <main style="max-width:800px;margin:40px auto;padding:20px;">
+ <h1>¿Cómo ahorrar gas en invierno?</h1>
+ <p><small>05/09/2026 - Consejos útiles</small></p>
+diff --git a/blogs.html b/blogs.html
+index 173a17a..79166dc 100644
+--- a/blogs.html
++++ b/blogs.html
+@@ -16,10 +16,12 @@
+                 </a>
+             </div>
+             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+-            <label for="menu-toggle" class="menu-toggle-btn">☰</label>
++            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+             <ul class="menu-principal">
+                 <li><a href="index.html">Home</a></li>
+                 <li><a href="productos.html">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
+                 <li><a href="nosotros.html">Nosotros</a></li>
+                 <li><a href="blogs.html" class="activo">Blogs</a></li>
+                 <li><a href="contacto.html">Contacto</a></li>
+diff --git a/carrito.html b/carrito.html
+index 6f703c5..751a390 100644
+--- a/carrito.html
++++ b/carrito.html
+@@ -16,17 +16,17 @@
+                     <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
+                 </a>
+             </div>
+-            </div>
+             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+-            <label for="menu-toggle" class="menu-toggle-btn">☰</label>
++            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+             <ul class="menu-principal">
+                 <li><a href="index.html">Home</a></li>
+                 <li><a href="productos.html">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
+                 <li><a href="nosotros.html">Nosotros</a></li>
+                 <li><a href="blogs.html">Blogs</a></li>
+                 <li><a href="contacto.html">Contacto</a></li>
+             </ul>
+-
+             <div class="acciones-usuario">
+                 <a href="login.html">Iniciar sesión</a>
+                 <a href="registro.html">Registrar usuario</a>
+@@ -56,10 +56,13 @@
+ 
+         <button id="botonPagar" type="button" class="btn-primario">Pagar</button>
+ 
++        <div id="mensajePago" class="mensaje-alerta"></div>
++
+         <p id="carritoVacio">Tu carrito está vacío.</p>
+     </main>
+ <footer>
+         <p>&copy; 2026 Distribuidora Gas El Volcán - Chillán, Ñuble</p>    </footer>
++    <script src="js/api.js"></script>
+     <script src="js/productos-data.js"></script>
+     <script src="js/carrito.js"></script>
+     <script src="js/sesion.js"></script>
+diff --git a/contacto.html b/contacto.html
+index 3b2acd4..857c471 100644
+--- a/contacto.html
++++ b/contacto.html
+@@ -17,23 +17,21 @@
+                     <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
+                 </a>
+             </div>
+-
+-            <!-- Botón menú hamburguesa para celulares -->
+             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+             <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+-
+             <ul class="menu-principal">
+                 <li><a href="index.html">Home</a></li>
+                 <li><a href="productos.html">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
+                 <li><a href="nosotros.html">Nosotros</a></li>
+                 <li><a href="blogs.html">Blogs</a></li>
+                 <li><a href="contacto.html" class="activo">Contacto</a></li>
+             </ul>
+-
+             <div class="acciones-usuario">
+-              <a href="login.html">Iniciar sesión</a>
+-              <a href="registro.html">Registrar usuario</a>
+-              <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
++                <a href="login.html">Iniciar sesión</a>
++                <a href="registro.html">Registrar usuario</a>
++                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+             </div>
+         </nav>
+     </header>
+diff --git a/css/estilos.css b/css/estilos.css
+index dd3c10b..7dc93ae 100644
+--- a/css/estilos.css
++++ b/css/estilos.css
+@@ -293,4 +293,15 @@ img.imagen-producto-grande {
+ .menu-principal a.activo {
+     background-color: var(--color-primario);
+     color: white;
+-}
+\ No newline at end of file
++}
++
++/* EP3: cuando el personal inicia sesión el menú tiene 2 enlaces más (Pedidos, Historial);
++   si no caben en una línea, bajan a la siguiente en vez de cortarse en el borde de la pantalla */
++nav {
++    flex-wrap: wrap;
++    gap: 10px;
++}
++
++.menu-principal {
++    flex-wrap: wrap;
++}
+diff --git a/historial.html b/historial.html
+index 1151ef8..b565297 100644
+--- a/historial.html
++++ b/historial.html
+@@ -2,15 +2,51 @@
+ <html lang="es">
+ <head>
+     <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Historial - Gas El Volcán</title>
+     <link rel="stylesheet" href="css/estilos.css">
+ </head>
+ <body>
+-    <header><nav><ul class="menu-principal"><li><a href="index.html">Home</a></li><li><a href="pedidos.html">Pedidos</a></li><li><a href="historial.html" class="activo">Historial</a></li></ul></nav></header>
+-    <main style="padding:20px; max-width:800px; margin:auto;">
++    <header>
++        <nav>
++            <div class="logo">
++                <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
++                    <img src="img/logo.jpg" alt="Logo Gas El Volcán" style="height: 70px; width: auto; object-fit: contain; border-radius: 4px;">
++                    <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
++                </a>
++            </div>
++            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
++            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
++            <ul class="menu-principal">
++                <li><a href="index.html">Home</a></li>
++                <li><a href="productos.html">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html" class="activo">Historial</a></li>
++                <li><a href="nosotros.html">Nosotros</a></li>
++                <li><a href="blogs.html">Blogs</a></li>
++                <li><a href="contacto.html">Contacto</a></li>
++            </ul>
++            <div class="acciones-usuario">
++                <a href="login.html">Iniciar sesión</a>
++                <a href="registro.html">Registrar usuario</a>
++                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
++            </div>
++        </nav>
++    </header>
++
++    <main style="padding:20px; max-width:900px; margin:20px auto;">
+         <h1>Auditoría de Productos</h1>
+-        <div id="contenedor-historial"></div>
++        <p>Registro de cada cambio de stock y de precios (colección <code>historial_productos</code> de MongoDB). Lo más reciente aparece primero.</p>
++        <div id="contenedor-historial"><p>Cargando...</p></div>
+     </main>
++
++    <footer>
++        <p>&copy; 2026 Distribuidora Gas El Volcán - Chillán, Ñuble</p>
++    </footer>
++
++    <script src="js/api.js"></script>
++    <script src="js/carrito.js"></script>
++    <script src="js/sesion.js"></script>
+     <script src="js/historial.js"></script>
+ </body>
+-</html>
+\ No newline at end of file
++</html>
+diff --git a/index.html b/index.html
+index 3b0bb17..7183110 100644
+--- a/index.html
++++ b/index.html
+@@ -17,18 +17,16 @@
+                 </a>
+             </div>
+             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+-            <label for="menu-toggle" class="menu-toggle-btn">☰</label>
++            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+             <ul class="menu-principal">
+                 <li><a href="index.html" class="activo">Home</a></li>
+                 <li><a href="productos.html">Productos</a></li>
+-                <li><a href="pedidos.html">Pedidos</a></li> <!-- Nuevo -->
+-                <li><a href="historial.html">Historial</a></li> <!-- Nuevo -->
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
+                 <li><a href="nosotros.html">Nosotros</a></li>
+                 <li><a href="blogs.html">Blogs</a></li>
+                 <li><a href="contacto.html">Contacto</a></li>
+-                
+             </ul>
+-
+             <div class="acciones-usuario">
+                 <a href="login.html">Iniciar sesión</a>
+                 <a href="registro.html">Registrar usuario</a>
+@@ -50,6 +48,7 @@
+ 
+     <footer>
+         <p>&copy; 2026 Distribuidora Gas El Volcán - Chillán, Ñuble</p>    </footer>
++    <script src="js/api.js"></script>
+     <script src="js/productos-data.js"></script>
+     <script src="js/carrito.js"></script>
+     <script src="js/sesion.js"></script>
+diff --git a/js/admin-home.js b/js/admin-home.js
+index fb81a49..2d47380 100644
+--- a/js/admin-home.js
++++ b/js/admin-home.js
+@@ -1,12 +1,18 @@
+-// Actualiza las tarjetas de resumen del dashboard con las cantidades reales
+-// de productos y usuarios registrados en el sistema
++// Actualiza las tarjetas de resumen del dashboard.
++// Los productos se cuentan desde MongoDB; los usuarios siguen guardados en este navegador.
+ const statProductos = document.getElementById("statProductos");
+ if (statProductos) {
+-  statProductos.textContent = PRODUCTOS.length + " productos registrados";
++  cargarCatalogo()
++    .then(function (productos) {
++      statProductos.textContent = productos.length + " productos registrados";
++    })
++    .catch(function () {
++      statProductos.textContent = "No se pudo conectar con el servidor";
++    });
+ }
+ 
+ const statUsuarios = document.getElementById("statUsuarios");
+ if (statUsuarios) {
+   const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+   statUsuarios.textContent = usuarios.length + " usuarios registrados";
+-}
+\ No newline at end of file
++}
+diff --git a/js/admin-productos.js b/js/admin-productos.js
+index 0669c4b..bdc0d3f 100644
+--- a/js/admin-productos.js
++++ b/js/admin-productos.js
+@@ -1,23 +1,25 @@
+-// Recorre el catálogo de productos (PRODUCTOS, que viene de productos-data.js y ya lee
+-// desde localStorage si hay cambios guardados) y pinta una fila por cada producto en la
+-// tabla del panel de administración
++// Panel de administración - Productos.
++// Los productos se leen de MongoDB (cargarCatalogo) y los cambios se guardan en MongoDB a través del servidor.
+ function mostrarProductosAdmin() {
+   const cuerpo = document.getElementById("cuerpoProductosAdmin");
+   if (!cuerpo) return;
+ 
++  // Solo el Administrador puede crear y eliminar productos (el servidor también lo exige)
++  const puedeEliminar = esAdministrador();
++
+   let filas = "";
+ 
+   PRODUCTOS.forEach(function (producto) {
+     filas += `
+       <tr>
+-        <td>${producto.codigo}</td>
+-        <td>${producto.nombre}</td>
+-        <td>${producto.categoria}</td>
+-        <td>$${producto.precioResidencial}</td>
++        <td>${escaparHtml(producto.codigo)}</td>
++        <td>${escaparHtml(producto.nombre)}</td>
++        <td>${escaparHtml(producto.categoria)}</td>
++        <td>${formatoPesos(producto.precioResidencial)}</td>
+         <td>${producto.stock}</td>
+         <td>
+           <button type="button" class="btn-editar" onclick="editarProducto('${producto.codigo}')">Editar</button>
+-          <button type="button" class="btn-eliminar" onclick="eliminarProducto('${producto.codigo}')">Eliminar</button>
++          ${puedeEliminar ? `<button type="button" class="btn-eliminar" onclick="eliminarProducto('${producto.codigo}')">Eliminar</button>` : ""}
+         </td>
+       </tr>
+     `;
+@@ -32,17 +34,29 @@ function editarProducto(codigo) {
+   window.location.href = "producto-editar.html";
+ }
+ 
+-// Elimina un producto del catálogo buscándolo por su código (no por su posición en el
+-// arreglo, para que no se desordene), actualiza localStorage y vuelve a pintar la tabla
++// Elimina un producto de MongoDB. Los pedidos antiguos no se afectan: cada pedido guarda su propia copia del nombre y el precio.
+ function eliminarProducto(codigo) {
+   if (!confirm("¿Eliminar este producto?")) return;
+ 
+-  PRODUCTOS = PRODUCTOS.filter(function (p) {
+-    return p.codigo !== codigo;
+-  });
++  llamarApi("/productos/" + encodeURIComponent(codigo), { method: "DELETE" })
++    .then(function () {
++      return cargarCatalogo();
++    })
++    .then(mostrarProductosAdmin)
++    .catch(function (error) {
++      alert("❌ No se pudo eliminar: " + error.message);
++    });
++}
+ 
+-  localStorage.setItem("productos", JSON.stringify(PRODUCTOS));
+-  mostrarProductosAdmin();
++// El botón "Nuevo Producto" es solo para el Administrador
++if (!esAdministrador()) {
++  const enlaceNuevo = document.querySelector('a[href="producto-nuevo.html"]');
++  if (enlaceNuevo) enlaceNuevo.style.display = "none";
+ }
+ 
+-mostrarProductosAdmin();
+\ No newline at end of file
++cargarCatalogo()
++  .then(mostrarProductosAdmin)
++  .catch(function (error) {
++    const cuerpo = document.getElementById("cuerpoProductosAdmin");
++    if (cuerpo) cuerpo.innerHTML = '<tr><td colspan="6">No se pudo cargar desde el servidor: ' + escaparHtml(error.message) + '</td></tr>';
++  });
+diff --git a/js/api.js b/js/api.js
+new file mode 100644
+index 0000000..2f9b567
+--- /dev/null
++++ b/js/api.js
+@@ -0,0 +1,95 @@
++// js/api.js
++// Ayudas compartidas para hablar con el servidor (server.cjs) y manejar la sesión del personal.
++// Se carga en TODAS las páginas que usan datos de MongoDB.
++
++const API_URL = 'http://localhost:5000/api';
++
++// Datos del usuario que inició sesión (los guarda login.js)
++function obtenerSesion() {
++  try {
++    return JSON.parse(localStorage.getItem('usuarioActivo'));
++  } catch (e) {
++    return null;
++  }
++}
++
++// Token que entrega el servidor cuando inicia sesión el personal (Administrador / Vendedor)
++function obtenerTokenStaff() {
++  return localStorage.getItem('tokenStaff');
++}
++
++function esStaff() {
++  const s = obtenerSesion();
++  return !!(s && (s.rol === 'Administrador' || s.rol === 'Vendedor') && obtenerTokenStaff());
++}
++
++function esAdministrador() {
++  const s = obtenerSesion();
++  return !!(s && s.rol === 'Administrador' && obtenerTokenStaff());
++}
++
++function cerrarSesion() {
++  localStorage.removeItem('usuarioActivo');
++  localStorage.removeItem('tokenStaff');
++}
++
++// Protege una página: si no hay sesión de personal, manda a iniciar sesión.
++// rutaLogin: 'login.html' (páginas de la tienda) o '../login.html' (panel admin).
++function exigirStaff(rutaLogin) {
++  if (!esStaff()) {
++    window.location.replace(rutaLogin + '?aviso=staff');
++    return false;
++  }
++  return true;
++}
++
++// Llama a la API. Agrega el token si hay uno y devuelve el JSON.
++// Si el servidor responde con error, lanza un Error con el mensaje que mandó el servidor.
++async function llamarApi(ruta, opciones) {
++  const config = Object.assign({}, opciones);
++  config.headers = Object.assign({ 'Content-Type': 'application/json' }, config.headers);
++  const token = obtenerTokenStaff();
++  if (token) config.headers.Authorization = 'Bearer ' + token;
++  if (config.body && typeof config.body !== 'string') config.body = JSON.stringify(config.body);
++
++  let respuesta;
++  try {
++    respuesta = await fetch(API_URL + ruta, config);
++  } catch (e) {
++    throw new Error('No se pudo conectar con el servidor. ¿Está encendido "node server.cjs"?');
++  }
++
++  let datos = null;
++  try {
++    datos = await respuesta.json();
++  } catch (e) {
++    datos = null;
++  }
++
++  if (!respuesta.ok) {
++    // La sesión del personal venció (por ejemplo, se reinició el servidor): hay que entrar de nuevo
++    if (respuesta.status === 401 && token) {
++      cerrarSesion();
++      alert('Tu sesión terminó. Inicia sesión de nuevo.');
++      const enAdmin = window.location.pathname.indexOf('/admin/') !== -1;
++      window.location.replace((enAdmin ? '../' : '') + 'login.html');
++    }
++    const error = new Error((datos && datos.error) || 'Error del servidor (' + respuesta.status + ')');
++    error.status = respuesta.status;
++    throw error;
++  }
++  return datos;
++}
++
++// Escapa texto antes de ponerlo en el HTML (por si un nombre trae símbolos como < o &)
++function escaparHtml(texto) {
++  return String(texto === undefined || texto === null ? '' : texto)
++    .replace(/&/g, '&amp;')
++    .replace(/</g, '&lt;')
++    .replace(/>/g, '&gt;')
++    .replace(/"/g, '&quot;');
++}
++
++function formatoPesos(numero) {
++  return '$' + Number(numero || 0).toLocaleString('es-CL');
++}
+diff --git a/js/carrito-pagina.js b/js/carrito-pagina.js
+index b41d680..34c3364 100644
+--- a/js/carrito-pagina.js
++++ b/js/carrito-pagina.js
+@@ -1,5 +1,6 @@
+ // Pinta la tabla del carrito: muestra los productos, calcula subtotales y el total,
+-// y maneja el caso de carrito vacío
++// y maneja el caso de carrito vacío. Los precios y el stock vienen de MongoDB
++// (PRODUCTOS se llena con cargarCatalogo() antes de dibujar).
+ function renderizarCarrito() {
+   const carrito = obtenerCarrito();
+ 
+@@ -34,14 +35,14 @@ function renderizarCarrito() {
+     filas += `
+       <tr>
+         <td>${obtenerImagenHtml(producto, "imagen-producto")}</td>
+-        <td>${producto.nombre}</td>
+-        <td>$${producto.precioResidencial}</td>
++        <td>${escaparHtml(producto.nombre)}</td>
++        <td>${formatoPesos(producto.precioResidencial)}</td>
+         <td>
+           <button type="button" class="btn-cantidad" onclick="actualizarCantidad('${item.codigo}', ${item.cantidad - 1}); renderizarCarrito();">-</button>
+           ${item.cantidad}
+           <button type="button" class="btn-cantidad" onclick="actualizarCantidad('${item.codigo}', ${item.cantidad + 1}); renderizarCarrito();">+</button>
+         </td>
+-        <td>$${subtotal}</td>
++        <td>${formatoPesos(subtotal)}</td>
+         <td>
+           <button type="button" class="btn-secundario" onclick="quitarDelCarrito('${item.codigo}'); renderizarCarrito();">Quitar</button>
+         </td>
+@@ -51,9 +52,94 @@ function renderizarCarrito() {
+ 
+   cuerpo.innerHTML = filas;
+ 
+-  if(totalEl) totalEl.textContent = calcularTotal();
++  if(totalEl) totalEl.textContent = calcularTotal().toLocaleString("es-CL");
+ 
+   actualizarContadorCarrito();
+ }
+ 
+-renderizarCarrito();
+\ No newline at end of file
++// Muestra un mensaje bajo el botón Pagar (tipo: "exito" o "error")
++function mostrarMensajePago(texto, tipo) {
++  const mensaje = document.getElementById("mensajePago");
++  if (!mensaje) return;
++  mensaje.className = "mensaje-alerta " + tipo;
++  mensaje.textContent = texto;
++}
++
++// Botón Pagar: manda el carrito al servidor, que crea el pedido en MongoDB
++// (descuenta el stock con control y guarda el historial).
++function pagar() {
++  const boton = document.getElementById("botonPagar");
++  const carrito = obtenerCarrito();
++
++  if (carrito.length === 0) {
++    mostrarMensajePago("Tu carrito está vacío.", "error");
++    return;
++  }
++
++  const sesion = obtenerSesion();
++  if (!sesion) {
++    mostrarMensajePago("Debes iniciar sesión como cliente para pagar. Te llevamos al login...", "error");
++    setTimeout(function () { window.location.href = "login.html"; }, 1500);
++    return;
++  }
++  if (sesion.rol !== "Cliente") {
++    mostrarMensajePago("Las cuentas del personal no pueden comprar. Inicia sesión con una cuenta de cliente.", "error");
++    return;
++  }
++
++  // Dirección y teléfono se sacan de la lista de usuarios registrados en este navegador
++  let usuarios = [];
++  try {
++    usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
++  } catch (e) {
++    usuarios = [];
++  }
++  const datosUsuario = usuarios.find(function (u) {
++    return u.correo && u.correo.toLowerCase() === String(sesion.correo).toLowerCase();
++  }) || {};
++
++  boton.disabled = true;
++  mostrarMensajePago("Procesando tu pedido...", "exito");
++
++  llamarApi("/pedidos", {
++    method: "POST",
++    body: {
++      cliente: {
++        correo: sesion.correo,
++        nombre: sesion.nombre,
++        run: sesion.run,
++        direccion: datosUsuario.direccion,
++        telefono: datosUsuario.telefono
++      },
++      items: carrito.map(function (item) {
++        return { codigo: item.codigo, cantidad: item.cantidad };
++      })
++    }
++  })
++    .then(function (pedido) {
++      guardarCarrito([]);
++      mostrarMensajePago(
++        "✅ Pedido N° " + pedido.id_pedido + " creado por " + formatoPesos(pedido.total) + ". Estado: PENDIENTE.",
++        "exito"
++      );
++      return cargarCatalogo(); // para refrescar el stock disponible
++    })
++    .catch(function (error) {
++      mostrarMensajePago("❌ " + error.message, "error");
++    })
++    .finally(function () {
++      boton.disabled = false;
++      renderizarCarrito();
++    });
++}
++
++document.addEventListener("DOMContentLoaded", function () {
++  const boton = document.getElementById("botonPagar");
++  if (boton) boton.addEventListener("click", pagar);
++
++  cargarCatalogo()
++    .then(renderizarCarrito)
++    .catch(function () {
++      mostrarMensajePago("No se pudo cargar el catálogo desde el servidor. ¿Está encendido \"node server.cjs\"?", "error");
++    });
++});
+diff --git a/js/carrito.js b/js/carrito.js
+index 4923cc6..c25e453 100644
+--- a/js/carrito.js
++++ b/js/carrito.js
+@@ -20,7 +20,7 @@ function agregarAlCarrito(codigo, cantidad) {
+ 
+   if (producto === undefined) {
+     console.error("Producto no encontrado:", codigo);
+-    return;
++    return false;
+   }
+ 
+   const carrito = obtenerCarrito();
+@@ -34,7 +34,7 @@ function agregarAlCarrito(codigo, cantidad) {
+ 
+   if (cantidadNueva > producto.stock) {
+     alert("No hay suficiente stock. Disponible: " + producto.stock);
+-    return;
++    return false;
+   }
+ 
+   if (itemExistente) {
+@@ -44,6 +44,16 @@ function agregarAlCarrito(codigo, cantidad) {
+   }
+ 
+   guardarCarrito(carrito);
++  return true;
++}
++
++// Botón "Añadir" de las tarjetas: agrega 1 unidad y avisa SOLO si se pudo agregar
++// (antes avisaba "agregado" incluso cuando no había stock)
++function agregarYAvisar(codigo) {
++  if (agregarAlCarrito(codigo, 1)) {
++    actualizarContadorCarrito();
++    alert("Producto agregado al carrito");
++  }
+ }
+ // Elimina por completo un producto del carrito
+ function quitarDelCarrito(codigo) {
+@@ -98,6 +108,8 @@ function calcularTotal() {
+       return p.codigo === item.codigo;
+     });
+ 
++    if (!producto) return; // el producto ya no existe en el catálogo: no se suma
++
+     total = total + producto.precioResidencial * item.cantidad;
+   });
+ 
+@@ -114,7 +126,7 @@ function actualizarContadorCarrito() {
+   });
+ 
+   const contador = document.getElementById("contadorCarrito");
+-  contador.textContent = totalUnidades;
++  if (contador) contador.textContent = totalUnidades;
+ }
+ 
+ actualizarContadorCarrito();
+\ No newline at end of file
+diff --git a/js/historial.js b/js/historial.js
+index 7ff7251..8df6262 100644
+--- a/js/historial.js
++++ b/js/historial.js
+@@ -1,30 +1,54 @@
++// js/historial.js
++// Página de auditoría: muestra los cambios de stock y precios guardados en MongoDB
++// (colección historial_productos). Solo para personal con sesión iniciada.
++
++// Nombre legible de cada tipo de cambio
++const ETIQUETAS_CAMPO = {
++  STOCK: 'Stock',
++  PRECIO_RESIDENCIAL: 'Precio residencial',
++  PRECIO_COMERCIAL: 'Precio comercial'
++};
++
++function formatoValor(campo, valor) {
++  if (valor === undefined || valor === null) return '—';
++  if (typeof valor === 'object') return escaparHtml(JSON.stringify(valor)); // registros con formato antiguo
++  return campo === 'STOCK' ? valor + ' unidades' : formatoPesos(valor);
++}
++
+ function cargarHistorial() {
+-    fetch('http://localhost:5000/api/historial')
+-        .then(res => res.json())
+-        .then(data => {
+-            if (data.length === 0) {
+-                document.getElementById('contenedor-historial').innerHTML = '<p>No hay registros de cambios aún.</p>';
+-                return;
+-            }
+-            let html = '';
+-            data.forEach(h => {
+-                const nombreAnt = h.valor_anterior ? h.valor_anterior.nombre : 'N/A';
+-                const precioAnt = h.valor_anterior ? h.valor_anterior.precio : '0';
+-                const nombreNue = h.valor_nuevo ? h.valor_nuevo.nombre : 'N/A';
+-                const precioNue = h.valor_nuevo ? h.valor_nuevo.precio : '0';
++  const contenedorHistorial = document.getElementById('contenedor-historial');
++
++  llamarApi('/historial')
++    .then(function (data) {
++      if (data.length === 0) {
++        contenedorHistorial.innerHTML = '<p>No hay registros de cambios aún.</p>';
++        return;
++      }
++      let html = '';
++      data.forEach(function (h) {
++        const fecha = h.fecha_cambio || h.fecha;
++        const fechaTexto = fecha ? new Date(fecha).toLocaleString('es-CL') : 'Sin fecha';
++        const codigo = h.codigo || h.codigo_producto || '—';
++        const campo = h.campo || 'CAMBIO';
++        const etiqueta = ETIQUETAS_CAMPO[campo] || campo;
+ 
+-                html += `<div style="border:1px solid #ddd; padding:15px; margin-bottom:15px; border-radius:8px; background:#fff;">
+-                    <p style="margin:0; color:#666;">📅 ${new Date(h.fecha).toLocaleString()} | 🆔 Producto: <strong>${h.codigo_producto}</strong></p>
+-                    <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
+-                    <p style="margin:5px 0; color:#d9534f;">❌ <strong>Antes:</strong> ${nombreAnt} ($${precioAnt})</p>
+-                    <p style="margin:5px 0; color:#5cb85c;">✅ <strong>Después:</strong> ${nombreNue} ($${precioNue})</p>
+-                </div>`;
+-            });
+-            document.getElementById('contenedor-historial').innerHTML = html;
+-        })
+-        .catch(err => {
+-            console.error("Error al cargar historial:", err);
+-            document.getElementById('contenedor-historial').innerHTML = '<p>Error al conectar con la base de datos.</p>';
+-        });
++        html += `<div style="border:1px solid #ddd; padding:15px; margin-bottom:15px; border-radius:8px; background:#fff;">
++            <p style="margin:0; color:#666;">📅 ${escaparHtml(fechaTexto)} | 🆔 Producto: <strong>${escaparHtml(codigo)}</strong> | 👤 ${escaparHtml(h.usuario || 'Sin usuario')}</p>
++            <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
++            <p style="margin:5px 0;"><strong>${escaparHtml(etiqueta)}</strong></p>
++            <p style="margin:5px 0; color:#d9534f;">❌ <strong>Antes:</strong> ${formatoValor(campo, h.valor_anterior)}</p>
++            <p style="margin:5px 0; color:#5cb85c;">✅ <strong>Después:</strong> ${formatoValor(campo, h.valor_nuevo)}</p>
++        </div>`;
++      });
++      contenedorHistorial.innerHTML = html;
++    })
++    .catch(function (err) {
++      console.error('Error al cargar historial:', err);
++      contenedorHistorial.innerHTML = '<p>' + escaparHtml(err.message) + '</p>';
++    });
+ }
+-document.addEventListener('DOMContentLoaded', cargarHistorial);
+\ No newline at end of file
++
++document.addEventListener('DOMContentLoaded', function () {
++  // Página solo para el personal: si no hay sesión de personal, se manda a iniciar sesión
++  if (exigirStaff('login.html')) cargarHistorial();
++});
+diff --git a/js/index.js b/js/index.js
+index 219985c..54f1100 100644
+--- a/js/index.js
++++ b/js/index.js
+@@ -1,44 +1,38 @@
+ // js/index.js
+-// Conectado a MongoDB (Backend en http://localhost:5000)
++// Productos destacados del inicio. Los datos vienen de MongoDB (servidor en http://localhost:5000)
+ 
+ const contenedorHome = document.getElementById("grid-productos");
+ 
+-function cargarDesdeMongo() {
+-  fetch('http://localhost:5000/api/productos')
+-    .then(response => {
+-      if (!response.ok) throw new Error('Error del servidor');
+-      return response.json();
+-    })
+-    .then(productos => {
+-      // Mostramos solo los primeros 4 productos como "destacados"
+-      renderizarDestacados(productos.slice(0, 4));
+-    })
+-    .catch(error => {
+-      console.error('Error al conectar con MongoDB:', error);
+-      contenedorHome.innerHTML = '<p class="text-danger">Error al conectar con la base de datos.</p>';
+-    });
+-}
+-
+ function renderizarDestacados(productos) {
+   let html = '';
+   productos.forEach(function (producto) {
+-    const codigo = producto._id;
+-    const precio = producto.precios ? producto.precios.residencial : 0;
+-    const imagen = producto.imagen || 'sin-imagen.jpg';
++    const imagen = producto.imagen || 'img/sin-imagen.jpg';
+ 
+     html += `
+       <div class="tarjeta-producto">
+-        <img src="img/${imagen}" class="imagen-producto" alt="${producto.nombre}" onerror="this.style.display='none'">
+-        <h3>${producto.nombre}</h3>
+-        <p>$${precio}</p>
+-        <a class="btn-secundario" href="producto-detalle.html?codigo=${codigo}">Ver detalle</a>
+-        <button type="button" class="btn-primario" onclick="agregarAlCarrito('${codigo}', 1); actualizarContadorCarrito(); alert('Producto agregado al carrito');">Añadir</button>
++        <img src="${imagen}" class="imagen-producto" alt="${escaparHtml(producto.nombre)}" onerror="this.style.display='none'">
++        <h3>${escaparHtml(producto.nombre)}</h3>
++        <p>${formatoPesos(producto.precioResidencial)}</p>
++        <p><small>Stock: ${producto.stock}</small></p>
++        <a class="btn-secundario" href="producto-detalle.html?codigo=${encodeURIComponent(producto.codigo)}">Ver detalle</a>
++        <button type="button" class="btn-primario" onclick="agregarYAvisar('${producto.codigo}')">Añadir</button>
+       </div>
+     `;
+   });
+   contenedorHome.innerHTML = html;
+ }
+ 
+-document.addEventListener('DOMContentLoaded', function() {
+-  cargarDesdeMongo();
+-});
+\ No newline at end of file
++document.addEventListener('DOMContentLoaded', function () {
++  // Nosotros y Blogs también cargan este archivo pero no tienen la grilla de productos
++  if (!contenedorHome) return;
++
++  cargarCatalogo()
++    .then(function (productos) {
++      // Mostramos solo los primeros 4 productos como "destacados"
++      renderizarDestacados(productos.slice(0, 4));
++    })
++    .catch(function (error) {
++      console.error('Error al conectar con MongoDB:', error);
++      contenedorHome.innerHTML = '<p class="text-danger">Error al conectar con la base de datos.</p>';
++    });
++});
+diff --git a/js/login.js b/js/login.js
+index 6eb5148..95c9e9f 100644
+--- a/js/login.js
++++ b/js/login.js
+@@ -123,6 +123,12 @@ document.addEventListener("DOMContentLoaded", () => {
+     elementoError.textContent = "";
+   }
+ 
++  // Si nos mandaron aquí desde una página que solo es para el personal, se explica por qué
++  if (new URLSearchParams(window.location.search).get("aviso") === "staff") {
++    mensajeGeneral.className = "mensaje-alerta error";
++    mensajeGeneral.textContent = "Esa página es solo para el personal. Inicia sesión como Administrador o Vendedor.";
++  }
++
+   inputCorreo.addEventListener("input", validarCorreoFormato);
+   inputCorreo.addEventListener("blur", validarCorreoFormato);
+ 
+@@ -154,25 +160,53 @@ document.addEventListener("DOMContentLoaded", () => {
+     );
+ 
+     if (usuarioEncontrado) {
+-      // Éxito: Guardar sesión activa con su ROL REAL
+-      localStorage.setItem("usuarioActivo", JSON.stringify({
+-        run: usuarioEncontrado.run,
+-        nombre: `${usuarioEncontrado.nombre} ${usuarioEncontrado.apellidos}`,
+-        correo: usuarioEncontrado.correo,
+-        rol: usuarioEncontrado.tipoUsuario || "Cliente"
+-      }));
+-
+-      mensajeGeneral.className = "mensaje-alerta exito";
+-      mensajeGeneral.textContent = `¡Bienvenido/a ${usuarioEncontrado.nombre}! (Rol: ${usuarioEncontrado.tipoUsuario}). Redirigiendo...`;
+-
+-      // Redirigir según el rol
+-      setTimeout(() => {
+-        if (usuarioEncontrado.tipoUsuario === "Administrador" || usuarioEncontrado.tipoUsuario === "Vendedor") {
+-          window.location.href = "admin/home.html";
++      const esPersonal = usuarioEncontrado.tipoUsuario === "Administrador" || usuarioEncontrado.tipoUsuario === "Vendedor";
++
++      // Guarda la sesión activa con su ROL REAL y redirige según el rol
++      const entrar = (tokenStaff) => {
++        localStorage.setItem("usuarioActivo", JSON.stringify({
++          run: usuarioEncontrado.run,
++          nombre: `${usuarioEncontrado.nombre} ${usuarioEncontrado.apellidos}`,
++          correo: usuarioEncontrado.correo,
++          rol: usuarioEncontrado.tipoUsuario || "Cliente"
++        }));
++        if (tokenStaff) {
++          localStorage.setItem("tokenStaff", tokenStaff);
+         } else {
+-          window.location.href = "index.html";
++          localStorage.removeItem("tokenStaff");
+         }
+-      }, 1500);
++
++        mensajeGeneral.className = "mensaje-alerta exito";
++        mensajeGeneral.textContent = `¡Bienvenido/a ${usuarioEncontrado.nombre}! (Rol: ${usuarioEncontrado.tipoUsuario}). Redirigiendo...`;
++
++        setTimeout(() => {
++          window.location.href = esPersonal ? "admin/home.html" : "index.html";
++        }, 1500);
++      };
++
++      if (!esPersonal) {
++        entrar(null);
++        return;
++      }
++
++      // El personal además inicia sesión en el servidor: de ahí sale el token que
++      // permite editar productos, ver pedidos y ver el historial.
++      fetch(API_URL + "/login", {
++        method: "POST",
++        headers: { "Content-Type": "application/json" },
++        body: JSON.stringify({ correo: correoIngresado, password: passwordIngresada })
++      })
++        .then(async (respuesta) => {
++          const datos = await respuesta.json().catch(() => ({}));
++          if (!respuesta.ok) throw new Error(datos.error || "El servidor rechazó el inicio de sesión.");
++          entrar(datos.token);
++        })
++        .catch((error) => {
++          mensajeGeneral.className = "mensaje-alerta error";
++          mensajeGeneral.textContent = error instanceof TypeError
++            ? 'No se pudo conectar con el servidor. ¿Está encendido "node server.cjs"?'
++            : error.message;
++        });
+ 
+     } else {
+       // Error de credenciales
+diff --git a/js/pedidos.js b/js/pedidos.js
+index 4d9bcb1..13f4fa5 100644
+--- a/js/pedidos.js
++++ b/js/pedidos.js
+@@ -1,23 +1,45 @@
++// js/pedidos.js
++// Página de pedidos: lista los pedidos guardados en MongoDB (colección pedidos).
++// Cada pedido trae sus líneas de detalle DENTRO del mismo documento. Solo para personal.
++
+ function cargarPedidos() {
+-    fetch('http://localhost:5000/api/pedidos')
+-        .then(res => res.json())
+-        .then(data => {
+-            let html = '';
+-            data.forEach(p => {
+-                // Buscamos el ID en _id, id_pedido o id, lo que esté disponible
+-                const idPedido = p._id || p.id_pedido || p.id || 'N/A';
+-                const nombreCliente = p.cliente ? p.cliente.nombre : 'Sin cliente';
++  const cuerpo = document.getElementById('lista-pedidos');
++
++  llamarApi('/pedidos')
++    .then(function (data) {
++      if (data.length === 0) {
++        cuerpo.innerHTML = '<tr><td colspan="6" style="padding:10px;">No hay pedidos.</td></tr>';
++        return;
++      }
++      // Los más nuevos primero
++      data.sort(function (a, b) { return b._id - a._id; });
++
++      let html = '';
++      data.forEach(function (p) {
++        const nombreCliente = p.cliente ? p.cliente.nombre : 'Sin cliente';
++        const fecha = p.fecha_pedido ? new Date(p.fecha_pedido).toLocaleDateString('es-CL') : '—';
++        const lineas = (p.lineas || []).map(function (l) {
++          return l.cantidad + ' × ' + escaparHtml(l.nombre || l.codigo);
++        }).join('<br>');
+ 
+-                html += `<tr>
+-                    <td style="padding:10px; border:1px solid #ddd;">${idPedido}</td>
+-                    <td style="padding:10px; border:1px solid #ddd;">${nombreCliente}</td>
+-                    <td style="padding:10px; border:1px solid #ddd;">${p.estado || 'PENDIENTE'}</td>
+-                    <td style="padding:10px; border:1px solid #ddd;">$${p.total || 0}</td>
+-                </tr>`;
+-            });
+-            document.getElementById('lista-pedidos').innerHTML = html;
+-        })
+-        .catch(err => console.error("Error al cargar pedidos:", err));
++        html += `<tr>
++            <td style="padding:10px; border:1px solid #ddd;">${p._id}</td>
++            <td style="padding:10px; border:1px solid #ddd;">${escaparHtml(nombreCliente)}</td>
++            <td style="padding:10px; border:1px solid #ddd;">${fecha}</td>
++            <td style="padding:10px; border:1px solid #ddd;">${lineas || '—'}</td>
++            <td style="padding:10px; border:1px solid #ddd;">${escaparHtml(p.estado || 'PENDIENTE')}</td>
++            <td style="padding:10px; border:1px solid #ddd;">${formatoPesos(p.total)}</td>
++        </tr>`;
++      });
++      cuerpo.innerHTML = html;
++    })
++    .catch(function (err) {
++      console.error('Error al cargar pedidos:', err);
++      cuerpo.innerHTML = '<tr><td colspan="6" style="padding:10px;">' + escaparHtml(err.message) + '</td></tr>';
++    });
+ }
+ 
+-document.addEventListener('DOMContentLoaded', cargarPedidos);
+\ No newline at end of file
++document.addEventListener('DOMContentLoaded', function () {
++  // Página solo para el personal: si no hay sesión de personal, se manda a iniciar sesión
++  if (exigirStaff('login.html')) cargarPedidos();
++});
+diff --git a/js/producto-detalle.js b/js/producto-detalle.js
+index 7370773..2d2ed82 100644
+--- a/js/producto-detalle.js
++++ b/js/producto-detalle.js
+@@ -1,3 +1,7 @@
++// js/producto-detalle.js
++// Detalle de un producto: datos desde MongoDB, cantidad + "Añadir al carrito",
++// productos relacionados (misma categoría) y, solo para el personal, edición.
++
+ function obtenerCodigoURL() {
+   const params = new URLSearchParams(window.location.search);
+   return params.get('codigo');
+@@ -5,39 +9,113 @@ function obtenerCodigoURL() {
+ 
+ function cargarDetalle() {
+   const codigo = obtenerCodigoURL();
+-  if (!codigo) return;
+-  fetch(`http://localhost:5000/api/productos/${codigo}`)
+-    .then(res => res.json())
+-    .then(p => renderizarDetalle(p))
+-    .catch(err => console.error(err));
++  const detalle = document.getElementById('detalleProducto');
++  if (!codigo) {
++    detalle.innerHTML = '<p>No se indicó ningún producto. <a href="productos.html">Volver a productos</a></p>';
++    return;
++  }
++
++  // El catálogo trae todos los productos de MongoDB: de ahí salen el producto y sus relacionados
++  cargarCatalogo()
++    .then(function () {
++      const producto = PRODUCTOS.find(function (p) { return p.codigo === codigo; });
++      if (!producto) {
++        detalle.innerHTML = '<p>No existe un producto con el código "' + escaparHtml(codigo) + '". <a href="productos.html">Volver a productos</a></p>';
++        return;
++      }
++      renderizarDetalle(producto);
++      renderizarRelacionados(producto);
++    })
++    .catch(function (err) {
++      console.error(err);
++      detalle.innerHTML = '<p>No se pudo cargar el producto. ¿Está encendido "node server.cjs"?</p>';
++    });
+ }
+ 
+ function renderizarDetalle(p) {
+-  const precio = p.precios ? p.precios.residencial : 0;
+-  const imagen = p.imagen || 'sin-imagen.jpg';
+-  document.getElementById('detalleProducto').innerHTML = `
+-    <div class="detalle-producto-container">
+-      <img src="img/${imagen}" class="imagen-producto-grande" alt="${p.nombre}">
+-      <div class="detalle-info">
+-        <h2>${p.nombre}</h2>
+-        <p><strong>Código:</strong> ${p._id}</p>
+-        <p><strong>Precio:</strong> $${precio}</p>
+-        <p><strong>Stock:</strong> ${p.stock}</p>
+-        <p><strong>Descripción:</strong> ${p.descripcion || 'Sin descripción'}</p>
++  const imagen = p.imagen || 'img/sin-imagen.jpg';
++
++  // Ruta de navegación: Home / Productos / categoría / producto
++  document.getElementById('breadcrumb').innerHTML =
++    '<a href="index.html">Home</a> / <a href="productos.html">Productos</a> / ' +
++    escaparHtml(p.categoria) + ' / <strong>' + escaparHtml(p.nombre) + '</strong>';
++
++  // Cantidad y botón "Añadir al carrito" (si no hay stock, se avisa en vez de mostrar el formulario)
++  const compra = p.stock > 0 ? `
++        <div style="display:flex; align-items:center; gap:10px; margin:15px 0;">
++          <label for="inputCantidad">Cantidad:</label>
++          <input type="number" id="inputCantidad" value="1" min="1" max="${p.stock}" step="1" style="width:90px; padding:8px;">
++          <button type="button" class="btn-primario" onclick="anadirDesdeDetalle('${p.codigo}')">Añadir al carrito</button>
++        </div>` : '<p><strong>Sin stock por el momento.</strong></p>';
++
++  // El botón y el formulario de edición solo existen si el personal inició sesión.
++  // (El servidor además rechaza cualquier cambio que no traiga una sesión válida.)
++  const edicion = esStaff() ? `
+         <div id="formEdicion" style="display:none; border:1px solid #ccc; padding:15px; margin-top:10px;">
+           <h3>Editar producto</h3>
+-          <input type="text" id="editNombre" value="${p.nombre}"><br>
+-          <input type="number" id="editPrecio" value="${precio}"><br>
+-          <input type="number" id="editStock" value="${p.stock}"><br>
+-          <button onclick="guardarCambios('${p._id}')">Guardar</button>
++          <input type="text" id="editNombre" value="${escaparHtml(p.nombre)}"><br>
++          <input type="number" id="editPrecio" min="0" value="${p.precioResidencial}"><br>
++          <input type="number" id="editStock" min="0" value="${p.stock}"><br>
++          <button onclick="guardarCambios('${p.codigo}')">Guardar</button>
+           <button onclick="toggleEdicion()">Cancelar</button>
+         </div>
+-        <button class="btn-secundario" onclick="toggleEdicion()">✏️ Editar</button>
++        <button class="btn-secundario" onclick="toggleEdicion()">✏️ Editar</button>` : '';
++
++  document.getElementById('detalleProducto').innerHTML = `
++    <div class="detalle-producto-container">
++      <img src="${imagen}" class="imagen-producto-grande" alt="${escaparHtml(p.nombre)}">
++      <div class="detalle-info">
++        <h2>${escaparHtml(p.nombre)}</h2>
++        <p><strong>Código:</strong> ${escaparHtml(p.codigo)}</p>
++        <p><strong>Precio:</strong> ${formatoPesos(p.precioResidencial)}</p>
++        <p><strong>Stock:</strong> ${p.stock}</p>
++        <p><strong>Descripción:</strong> ${escaparHtml(p.descripcion || 'Sin descripción')}</p>
++        ${compra}
++        ${edicion}
+       </div>
+     </div>
+   `;
+ }
+ 
++// Productos de la misma categoría (menos el que se está viendo)
++function renderizarRelacionados(producto) {
++  const relacionados = PRODUCTOS.filter(function (p) {
++    return p.categoria === producto.categoria && p.codigo !== producto.codigo;
++  });
++
++  const titulo = document.getElementById('tituloRelacionados');
++  const grilla = document.getElementById('grid-relacionados');
++  if (relacionados.length === 0) {
++    if (titulo) titulo.hidden = true;
++    return;
++  }
++  if (titulo) titulo.hidden = false;
++
++  grilla.innerHTML = relacionados.map(function (p) {
++    return `
++      <div class="tarjeta-producto">
++        <img src="${p.imagen || 'img/sin-imagen.jpg'}" class="imagen-producto" alt="${escaparHtml(p.nombre)}" onerror="this.style.display='none'">
++        <h3>${escaparHtml(p.nombre)}</h3>
++        <p>${formatoPesos(p.precioResidencial)}</p>
++        <a class="btn-secundario" href="producto-detalle.html?codigo=${encodeURIComponent(p.codigo)}">Ver detalle</a>
++      </div>`;
++  }).join('');
++}
++
++// Botón "Añadir al carrito" del detalle: usa la cantidad escrita en el campo
++function anadirDesdeDetalle(codigo) {
++  const cantidad = Number(document.getElementById('inputCantidad').value);
++  if (!Number.isInteger(cantidad) || cantidad < 1) {
++    alert('Ingresa una cantidad entera de 1 o más.');
++    return;
++  }
++  // agregarAlCarrito avisa por sí sola si la cantidad supera el stock
++  if (agregarAlCarrito(codigo, cantidad)) {
++    actualizarContadorCarrito();
++    alert('Producto agregado al carrito');
++  }
++}
++
+ function toggleEdicion() {
+   const f = document.getElementById('formEdicion');
+   f.style.display = (f.style.display === 'none') ? 'block' : 'none';
+@@ -45,32 +123,20 @@ function toggleEdicion() {
+ 
+ function guardarCambios(codigo) {
+   const nuevosDatos = {
+-    "nombre": document.getElementById('editNombre').value,
+-    "precios.residencial": Number(document.getElementById('editPrecio').value),
+-    "stock": Number(document.getElementById('editStock').value)
++    nombre: document.getElementById('editNombre').value,
++    precioResidencial: Number(document.getElementById('editPrecio').value),
++    stock: Number(document.getElementById('editStock').value)
+   };
+ 
+-  fetch(`http://localhost:5000/api/productos/${codigo}`, {
+-    method: 'PUT',
+-    headers: { 'Content-Type': 'application/json' },
+-    body: JSON.stringify(nuevosDatos)
+-  })
+-  .then(res => {
+-    // Si la respuesta es 200 (OK), asumimos éxito
+-    if (res.ok) {
++  llamarApi(`/productos/${encodeURIComponent(codigo)}`, { method: 'PUT', body: nuevosDatos })
++    .then(() => {
+       alert('✅ ¡Producto actualizado con éxito!');
+       location.reload(); // Recarga la página para mostrar los datos frescos
+-    } else {
+-      // Si hay un error real (400, 500), mostramos el error
+-      res.json().then(data => {
+-        alert('❌ Error: ' + (data.details || data.error || 'No se pudo actualizar'));
+-      });
+-    }
+-  })
+-  .catch(err => {
+-    console.error('Error de conexión:', err);
+-    alert('❌ Error de conexión con el servidor.');
+-  });
++    })
++    .catch(err => {
++      console.error('Error al guardar:', err);
++      alert('❌ Error: ' + err.message);
++    });
+ }
+ 
+-document.addEventListener('DOMContentLoaded', cargarDetalle);
+\ No newline at end of file
++document.addEventListener('DOMContentLoaded', cargarDetalle);
+diff --git a/js/producto-editar.js b/js/producto-editar.js
+index 77f806e..4ca4866 100644
+--- a/js/producto-editar.js
++++ b/js/producto-editar.js
+@@ -1,25 +1,32 @@
+-// Lee el producto a editar desde localStorage (clave que pone la tabla de productos.html)
++// Lee el producto a editar desde MongoDB (el código lo deja la tabla de productos.html en localStorage)
+ // y precarga el formulario con sus datos actuales
+ 
+ const codigoEditar = localStorage.getItem("codigoProductoEditar");
+ 
+-const producto = PRODUCTOS.find(p => p.codigo === codigoEditar);
+-
+-if (!producto) {
+-    alert("No se encontró el producto a editar");
+-    window.location.href = "productos.html";
+-} else {
+-    document.getElementById("codigo").value = producto.codigo;
+-    document.getElementById("nombre").value = producto.nombre;
+-    document.getElementById("descripcion").value = producto.descripcion || "";
+-    document.getElementById("categoria").value = producto.categoria;
+-    document.getElementById("unidad").value = producto.unidad;
+-    document.getElementById("precioResidencial").value = producto.precioResidencial;
+-    document.getElementById("precioComercial").value = producto.precioComercial;
+-    document.getElementById("stock").value = producto.stock;
+-    document.getElementById("stockCritico").value = producto.stockCritico;
+-    document.getElementById("imagen").value = producto.imagen || "";
+-}
++cargarCatalogo()
++    .then(function () {
++        const producto = PRODUCTOS.find(p => p.codigo === codigoEditar);
++
++        if (!producto) {
++            alert("No se encontró el producto a editar");
++            window.location.href = "productos.html";
++            return;
++        }
++
++        document.getElementById("codigo").value = producto.codigo;
++        document.getElementById("nombre").value = producto.nombre;
++        document.getElementById("descripcion").value = producto.descripcion || "";
++        document.getElementById("categoria").value = producto.categoria;
++        document.getElementById("unidad").value = producto.unidad;
++        document.getElementById("precioResidencial").value = producto.precioResidencial;
++        document.getElementById("precioComercial").value = producto.precioComercial;
++        document.getElementById("stock").value = producto.stock;
++        document.getElementById("stockCritico").value = producto.stockCritico;
++        document.getElementById("imagen").value = producto.imagen || "";
++    })
++    .catch(function (error) {
++        alert("No se pudo cargar el producto desde el servidor: " + error.message);
++    });
+ 
+ function validarNombreEditar() {
+     const valor = document.getElementById("nombre").value.trim();
+@@ -123,24 +130,26 @@ document.getElementById("formProductoEditar").addEventListener("submit", functio
+ 
+     if (!formularioValido) return;
+ 
+-    const indiceProducto = PRODUCTOS.findIndex(p => p.codigo === codigoEditar);
+-    if (indiceProducto === -1) {
+-        alert("No se pudo actualizar: el producto ya no existe.");
+-        window.location.href = "productos.html";
+-        return;
+-    }
+-
+-    PRODUCTOS[indiceProducto].nombre = document.getElementById("nombre").value.trim();
+-    PRODUCTOS[indiceProducto].descripcion = document.getElementById("descripcion").value.trim();
+-    PRODUCTOS[indiceProducto].categoria = document.getElementById("categoria").value;
+-    PRODUCTOS[indiceProducto].unidad = document.getElementById("unidad").value;
+-    PRODUCTOS[indiceProducto].precioResidencial = Number(document.getElementById("precioResidencial").value);
+-    PRODUCTOS[indiceProducto].precioComercial = Number(document.getElementById("precioComercial").value);
+-    PRODUCTOS[indiceProducto].stock = Number(document.getElementById("stock").value);
+-    PRODUCTOS[indiceProducto].stockCritico = document.getElementById("stockCritico").value !== "" ? Number(document.getElementById("stockCritico").value) : 0;
+-    PRODUCTOS[indiceProducto].imagen = document.getElementById("imagen").value.trim();
+-
+-    localStorage.setItem("productos", JSON.stringify(PRODUCTOS));
+-        alert("Producto actualizado correctamente.");
+-    window.location.href = "productos.html";
+-});
+\ No newline at end of file
++    // Se guarda en MongoDB a través del servidor. La base aplica sus reglas de validación
++    // y el servidor deja el registro en el historial si cambió el stock o algún precio.
++    const cambios = {
++        nombre: document.getElementById("nombre").value.trim(),
++        descripcion: document.getElementById("descripcion").value.trim(),
++        categoria: document.getElementById("categoria").value,
++        unidad: document.getElementById("unidad").value,
++        precioResidencial: Number(document.getElementById("precioResidencial").value),
++        precioComercial: Number(document.getElementById("precioComercial").value),
++        stock: Number(document.getElementById("stock").value),
++        stockCritico: document.getElementById("stockCritico").value !== "" ? Number(document.getElementById("stockCritico").value) : 0,
++        imagen: document.getElementById("imagen").value.trim()
++    };
++
++    llamarApi("/productos/" + encodeURIComponent(codigoEditar), { method: "PUT", body: cambios })
++        .then(function () {
++            alert("Producto actualizado correctamente.");
++            window.location.href = "productos.html";
++        })
++        .catch(function (error) {
++            alert("❌ No se pudo actualizar: " + error.message);
++        });
++});
+diff --git a/js/producto-nuevo.js b/js/producto-nuevo.js
+index 8fcfdb3..9e46ba1 100644
+--- a/js/producto-nuevo.js
++++ b/js/producto-nuevo.js
+@@ -1,4 +1,7 @@
+-// Validación y guardado del formulario "Nuevo Producto"
++// Validación y guardado del formulario "Nuevo Producto" (se guarda en MongoDB a través del servidor)
++
++// El catálogo se carga para poder avisar si el código ya existe (el servidor también lo comprueba)
++cargarCatalogo().catch(function () {});
+ 
+ function validarCodigo() {
+     const valor = document.getElementById("codigo").value.trim();
+@@ -130,9 +133,12 @@ document.getElementById("formProductoNuevo").addEventListener("submit", function
+         imagen: document.getElementById("imagen").value.trim()
+     };
+ 
+-    PRODUCTOS.push(nuevoProducto);
+-    localStorage.setItem("productos", JSON.stringify(PRODUCTOS));
+-
+-    alert("Producto guardado correctamente.");
+-    window.location.href = "productos.html";
+-});
+\ No newline at end of file
++    llamarApi("/productos", { method: "POST", body: nuevoProducto })
++        .then(function () {
++            alert("Producto guardado correctamente.");
++            window.location.href = "productos.html";
++        })
++        .catch(function (error) {
++            alert("❌ No se pudo guardar: " + error.message);
++        });
++});
+diff --git a/js/productos-data.js b/js/productos-data.js
+index c06dce8..3c46396 100644
+--- a/js/productos-data.js
++++ b/js/productos-data.js
+@@ -1,193 +1,42 @@
+-// Arreglo con los productos reales del catálogo de la Distribuidora Gas El Volcán
+-const PRODUCTOS_INICIALES = [
+-    {
+-        codigo: "CL001",
+-        categoria: "Cilindros de Gas",
+-        nombre: "Cilindro GLP 5 kg",
+-        descripcion: "Cilindro de gas licuado de petróleo 5 kg. Para uso residencial (cocina, calefacción pequeña)",
+-        unidad: "Unidad",
+-        precioResidencial: 6500,
+-        precioComercial: 6000,
+-        stock: 80,
+-        stockCritico: 16,
+-        imagen: "img/cilindro-5kg.jpg"
+-    },
+-    {
+-        codigo: "CL002",
+-        categoria: "Cilindros de Gas",
+-        nombre: "Cilindro GLP 11 kg",
+-        descripcion: "Cilindro estándar doméstico. El más utilizado en hogares chilenos. Compatible con reguladores estándar",
+-        unidad: "Unidad",
+-        precioResidencial: 12000,
+-        precioComercial: 11000,
+-        stock: 200,
+-        stockCritico: 40,
+-        imagen: "img/cilindro-11kg.jpg"
+-    },
+-    {
+-        codigo: "CL003",
+-        categoria: "Cilindros de Gas",
+-        nombre: "Cilindro GLP 15 kg",
+-        descripcion: "Cilindro de mayor capacidad para hogares de alto consumo o locales pequeños",
+-        unidad: "Unidad",
+-        precioResidencial: 16000,
+-        precioComercial: 14500,
+-        stock: 90,
+-        stockCritico: 18,
+-        imagen: "img/cilindro-15kg.jpg"
+-    },
+-    {
+-        codigo: "CL004",
+-        categoria: "Cilindros de Gas",
+-        nombre: "Cilindro GLP 45 kg",
+-        descripcion: "Cilindro industrial. Uso comercial: restaurantes, talleres, calefacción de locales",
+-        unidad: "Unidad",
+-        precioResidencial: 45000,
+-        precioComercial: 40000,
+-        stock: 30,
+-        stockCritico: 6,
+-        imagen: "img/cilindro-45kg.jpg"
+-    },
+-    {
+-        codigo: "RG001",
+-        categoria: "Reguladores",
+-        nombre: "Regulador doméstico estándar",
+-        descripcion: "Regulador de 1 etapa para cilindros 5, 11 y 15 kg. Presión de salida 28 mbar",
+-        unidad: "Unidad",
+-        precioResidencial: 8990,
+-        precioComercial: 8200,
+-        stock: 45,
+-        stockCritico: 9,
+-        imagen: "img/regulador-domestico.jpg"
+-    },
+-    {
+-        codigo: "RG002",
+-        categoria: "Reguladores",
+-        nombre: "Regulador de alta presión",
+-        descripcion: "Regulador para cocinas industriales o equipos de mayor consumo. Presión regulable",
+-        unidad: "Unidad",
+-        precioResidencial: 18990,
+-        precioComercial: 17000,
+-        stock: 12,
+-        stockCritico: 3,
+-        imagen: "img/regulador-de-alta-presion.jpg"
+-    },
+-    {
+-        codigo: "RG003",
+-        categoria: "Reguladores",
+-        nombre: "Regulador dual (2 salidas)",
+-        descripcion: "Permite conectar dos artefactos simultáneamente al mismo cilindro",
+-        unidad: "Unidad",
+-        precioResidencial: 14990,
+-        precioComercial: 13500,
+-        stock: 18,
+-        stockCritico: 4,
+-        imagen: "img/regulador-dual.jpg"
+-    },
+-    {
+-        codigo: "MG001",
+-        categoria: "Mangueras y Conexiones",
+-        nombre: "Manguera gas 1.5m",
+-        descripcion: "Manguera flexible homologada. Diámetro interior 9mm. Compatible con reguladores estándar",
+-        unidad: "Unidad",
+-        precioResidencial: 3990,
+-        precioComercial: 3500,
+-        stock: 80,
+-        stockCritico: 16,
+-        imagen: "img/manguera-gas.jpg"
+-    },
+-    {
+-        codigo: "MG002",
+-        categoria: "Mangueras y Conexiones",
+-        nombre: "Manguera gas 3m",
+-        descripcion: "Manguera larga para instalaciones donde el artefacto está alejado del cilindro",
+-        unidad: "Unidad",
+-        precioResidencial: 6990,
+-        precioComercial: 6200,
+-        stock: 50,
+-        stockCritico: 10,
+-        imagen: "img/manguera-gas-3m.jpg"
+-    },
+-    {
+-        codigo: "MG003",
+-        categoria: "Mangueras y Conexiones",
+-        nombre: "Abrazadera metálica",
+-        descripcion: "Abrazadera de acero para asegurar la conexión manguera-regulador y manguera-artefacto",
+-        unidad: "Unidad",
+-        precioResidencial: 990,
+-        precioComercial: 800,
+-        stock: 200,
+-        stockCritico: 40,
+-        imagen: "img/abrazadera-metalica.jpg"
+-    },
+-    {
+-        codigo: "MG004",
+-        categoria: "Mangueras y Conexiones",
+-        nombre: "Kit conexión completo (regulador + manguera 1.5m + abrazaderas)",
+-        descripcion: "Todo lo necesario para instalar un cilindro nuevo",
+-        unidad: "Kit",
+-        precioResidencial: 12990,
+-        precioComercial: 11500,
+-        stock: 25,
+-        stockCritico: 5,
+-        imagen: "img/kit-conexion.jpg"
+-    },
+-    {
+-        codigo: "AC001",
+-        categoria: "Accesorios",
+-        nombre: "Carro porta cilindro 11/15kg",
+-        descripcion: "Carro metálico con ruedas para transportar cilindros dentro del hogar con seguridad",
+-        unidad: "Unidad",
+-        precioResidencial: 12990,
+-        precioComercial: 11000,
+-        stock: 20,
+-        stockCritico: 4,
+-        imagen: "img/carro-gas.jpg"
+-    },
+-    {
+-        codigo: "AC002",
+-        categoria: "Accesorios",
+-        nombre: "Tapa protectora para válvula",
+-        descripcion: "Tapa de plástico ABS para proteger la válvula del cilindro durante el transporte",
+-        unidad: "Unidad",
+-        precioResidencial: 1490,
+-        precioComercial: 1200,
+-        stock: 60,
+-        stockCritico: 12,
+-        imagen: "img/tapa-gas.jpg"
+-    },
+-    {
+-        codigo: "AC003",
+-        categoria: "Accesorios",
+-        nombre: "Detector de gas a batería",
+-        descripcion: "Sensor electroquímico. Alarma sonora y visual ante fuga de gas GLP o metano",
+-        unidad: "Unidad",
+-        precioResidencial: 19990,
+-        precioComercial: 17000,
+-        stock: 8,
+-        stockCritico: 2,
+-        imagen: "img/detector-gas.jpg"
+-    }
+-];
++// js/productos-data.js
++// Catálogo de productos. Los datos YA NO están escritos en este archivo ni guardados en el
++// navegador: vienen de MongoDB a través del servidor (GET /api/productos).
++// Así la tienda, el carrito y el panel de administración ven siempre los mismos datos.
++//
++// Cada página que necesite el catálogo llama a cargarCatalogo() y espera su resultado.
+ 
+-// Si ya existe un catálogo guardado en localStorage (por ejemplo, porque el panel de administración
+-// agregó o editó un producto), se usa ese en vez del catálogo inicial. Si es la primera carga del
+-// sitio y todavía no hay nada guardado, se usa el catálogo inicial y se guarda en localStorage
+-// para que el panel de administración también pueda leerlo y modificarlo.
+-let PRODUCTOS = PRODUCTOS_INICIALES;
++// Arreglo con los productos (se llena al llamar a cargarCatalogo)
++let PRODUCTOS = [];
+ 
+-const productosGuardados = localStorage.getItem("productos");
+-if (productosGuardados) {
+-  try {
+-    const parseado = JSON.parse(productosGuardados);
+-    if (Array.isArray(parseado) && parseado.length > 0) {
+-      PRODUCTOS = parseado;
+-    }
+-  } catch (e) {
+-    console.error("Error leyendo productos guardados:", e);
+-  }
+-} else {
+-  localStorage.setItem("productos", JSON.stringify(PRODUCTOS_INICIALES));
++// Convierte un documento de MongoDB (precios.residencial, stock_critico, _id...)
++// a la forma simple que usan las páginas (precioResidencial, stockCritico, codigo...)
++function adaptarProducto(doc) {
++  return {
++    codigo: doc._id,
++    categoria: doc.categoria,
++    nombre: doc.nombre,
++    descripcion: doc.descripcion || '',
++    unidad: doc.unidad,
++    precioResidencial: doc.precios ? doc.precios.residencial : 0,
++    precioComercial: doc.precios ? doc.precios.comercial : 0,
++    stock: doc.stock,
++    stockCritico: doc.stock_critico || 0,
++    // En MongoDB solo se guarda el nombre del archivo; la ruta completa se arma aquí
++    imagen: doc.imagen ? 'img/' + doc.imagen : ''
++  };
++}
++
++// Pide el catálogo al servidor y lo deja en PRODUCTOS. Devuelve una promesa con el arreglo.
++function cargarCatalogo() {
++  return fetch(API_URL + '/productos')
++    .then(function (respuesta) {
++      if (!respuesta.ok) throw new Error('Error del servidor');
++      return respuesta.json();
++    })
++    .then(function (documentos) {
++      PRODUCTOS = documentos.map(adaptarProducto);
++      return PRODUCTOS;
++    });
+ }
+ 
+ // Ícono de respaldo por categoría, usado cuando un producto no tiene imagen asignada
+@@ -202,7 +51,7 @@ const ICONOS_POR_CATEGORIA = {
+ // o el ícono de su categoría si no
+ function obtenerImagenHtml(producto, clase) {
+   if (producto.imagen) {
+-    return `<img class="${clase}" src="${producto.imagen}" alt="${producto.nombre}">`;
++    return `<img class="${clase}" src="${producto.imagen}" alt="${escaparHtml(producto.nombre)}">`;
+   }
+-  return `<div class="${clase}">${ICONOS_POR_CATEGORIA[producto.categoria]}</div>`;
+-}
+\ No newline at end of file
++  return `<div class="${clase}">${ICONOS_POR_CATEGORIA[producto.categoria] || ''}</div>`;
++}
+diff --git a/js/productos.js b/js/productos.js
+index 5ad1d0c..ca651e1 100644
+--- a/js/productos.js
++++ b/js/productos.js
+@@ -1,44 +1,32 @@
+ // js/productos.js
+-// Conectado a MongoDB (Backend en http://localhost:5000)
++// Lista de productos de la tienda. Los datos vienen de MongoDB (servidor en http://localhost:5000)
+ 
+ const contenedor = document.getElementById("grid-productos");
+ 
+-function cargarDesdeMongo() {
+-  fetch('http://localhost:5000/api/productos')
+-    .then(response => {
+-      if (!response.ok) throw new Error('Error del servidor');
+-      return response.json();
+-    })
+-    .then(productos => {
+-      renderizarProductos(productos);
+-    })
+-    .catch(error => {
+-      console.error('Error al conectar con MongoDB:', error);
+-      contenedor.innerHTML = '<p class="text-danger">Error al conectar con la base de datos.</p>';
+-    });
+-}
+-
+ function renderizarProductos(productos) {
+   let html = '';
+   productos.forEach(function (producto) {
+-    // Adaptamos los datos de MongoDB
+-    const codigo = producto._id;
+-    const precio = producto.precios ? producto.precios.residencial : 0;
+-    const imagen = producto.imagen || 'sin-imagen.jpg';
++    const imagen = producto.imagen || 'img/sin-imagen.jpg';
+ 
+     html += `
+       <div class="tarjeta-producto">
+-        <img src="img/${imagen}" class="imagen-producto" alt="${producto.nombre}" onerror="this.style.display='none'">
+-        <h3>${producto.nombre}</h3>
+-        <p>$${precio}</p>
+-        <a class="btn-secundario" href="producto-detalle.html?codigo=${codigo}">Ver detalle</a>
+-        <button type="button" class="btn-primario" onclick="agregarAlCarrito('${codigo}', 1); actualizarContadorCarrito(); alert('Producto agregado al carrito');">Añadir</button>
++        <img src="${imagen}" class="imagen-producto" alt="${escaparHtml(producto.nombre)}" onerror="this.style.display='none'">
++        <h3>${escaparHtml(producto.nombre)}</h3>
++        <p>${formatoPesos(producto.precioResidencial)}</p>
++        <p><small>Stock: ${producto.stock}</small></p>
++        <a class="btn-secundario" href="producto-detalle.html?codigo=${encodeURIComponent(producto.codigo)}">Ver detalle</a>
++        <button type="button" class="btn-primario" onclick="agregarYAvisar('${producto.codigo}')">Añadir</button>
+       </div>
+     `;
+   });
+   contenedor.innerHTML = html;
+ }
+ 
+-document.addEventListener('DOMContentLoaded', function() {
+-  cargarDesdeMongo();
+-});
+\ No newline at end of file
++document.addEventListener('DOMContentLoaded', function () {
++  cargarCatalogo()
++    .then(renderizarProductos)
++    .catch(function (error) {
++      console.error('Error al conectar con MongoDB:', error);
++      contenedor.innerHTML = '<p class="text-danger">Error al conectar con la base de datos.</p>';
++    });
++});
+diff --git a/js/sesion.js b/js/sesion.js
+index 7b2a81f..11e412b 100644
+--- a/js/sesion.js
++++ b/js/sesion.js
+@@ -12,9 +12,6 @@
+  */
+ 
+ document.addEventListener("DOMContentLoaded", function () {
+-    var acciones = document.querySelector(".acciones-usuario");
+-    if (!acciones) return;
+-
+     var activo = null;
+     try {
+         activo = JSON.parse(localStorage.getItem("usuarioActivo"));
+@@ -22,6 +19,16 @@ document.addEventListener("DOMContentLoaded", function () {
+         activo = null;
+     }
+ 
++    // Los enlaces "Pedidos" e "Historial" del menú son solo para el personal (Administrador / Vendedor).
++    // Están en el menú de todas las páginas, pero únicamente se muestran si el personal inició sesión.
++    var esPersonal = !!(activo && (activo.rol === "Administrador" || activo.rol === "Vendedor"));
++    document.querySelectorAll("[data-solo-staff]").forEach(function (elemento) {
++        elemento.style.display = esPersonal ? "" : "none";
++    });
++
++    var acciones = document.querySelector(".acciones-usuario");
++    if (!acciones) return;
++
+     if (!activo || !activo.nombre) return;
+ 
+     var linkLogin = acciones.querySelector('a[href="login.html"]');
+@@ -51,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
+         linkRegistro.addEventListener("click", function (e) {
+             e.preventDefault();
+             localStorage.removeItem("usuarioActivo");
++            localStorage.removeItem("tokenStaff"); // también se cierra la sesión del personal en el servidor
+             window.location.href = "index.html";
+         });
+     }
+diff --git a/login.html b/login.html
+index eee416e..de58a32 100644
+--- a/login.html
++++ b/login.html
+@@ -17,19 +17,17 @@
+                     <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
+                 </a>
+             </div>
+-
+-            <!-- Botón hamburguesa para celulares (según CSS del equipo) -->
+             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+             <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+-
+             <ul class="menu-principal">
+                 <li><a href="index.html">Home</a></li>
+                 <li><a href="productos.html">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
+                 <li><a href="nosotros.html">Nosotros</a></li>
+                 <li><a href="blogs.html">Blogs</a></li>
+                 <li><a href="contacto.html">Contacto</a></li>
+             </ul>
+-
+             <div class="acciones-usuario">
+                 <a href="login.html">Iniciar sesión</a>
+                 <a href="registro.html">Registrar usuario</a>
+@@ -101,6 +99,7 @@
+         <p>&copy; 2026 Distribuidora Gas El Volcán - Chillán, Ñuble</p>    </footer>
+ 
+     <!-- Scripts -->
++    <script src="js/api.js"></script>
+     <script src="js/carrito.js"></script>
+     <script src="js/sesion.js"></script>
+     <script src="js/login.js"></script>
+diff --git a/nosotros.html b/nosotros.html
+index c4cf70e..087270b 100644
+--- a/nosotros.html
++++ b/nosotros.html
+@@ -64,23 +64,21 @@
+                     <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
+                 </a>
+             </div>
+-
+-            <!-- Botón menú hamburguesa para celulares -->
+             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+             <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+-
+             <ul class="menu-principal">
+                 <li><a href="index.html">Home</a></li>
+                 <li><a href="productos.html">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
+                 <li><a href="nosotros.html" class="activo">Nosotros</a></li>
+                 <li><a href="blogs.html">Blogs</a></li>
+                 <li><a href="contacto.html">Contacto</a></li>
+             </ul>
+-
+             <div class="acciones-usuario">
+-              <a href="login.html">Iniciar sesión</a>
+-              <a href="registro.html">Registrar usuario</a>
+-              <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
++                <a href="login.html">Iniciar sesión</a>
++                <a href="registro.html">Registrar usuario</a>
++                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+             </div>
+         </nav>
+     </header>
+diff --git a/pedidos.html b/pedidos.html
+index 5805c10..3c834fd 100644
+--- a/pedidos.html
++++ b/pedidos.html
+@@ -2,20 +2,54 @@
+ <html lang="es">
+ <head>
+     <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Pedidos - Gas El Volcán</title>
+     <link rel="stylesheet" href="css/estilos.css">
+ </head>
+ <body>
+     <header>
+-        <nav><ul class="menu-principal"><li><a href="index.html">Home</a></li><li><a href="pedidos.html" class="activo">Pedidos</a></li><li><a href="historial.html">Historial</a></li></ul></nav>
++        <nav>
++            <div class="logo">
++                <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
++                    <img src="img/logo.jpg" alt="Logo Gas El Volcán" style="height: 70px; width: auto; object-fit: contain; border-radius: 4px;">
++                    <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
++                </a>
++            </div>
++            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
++            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
++            <ul class="menu-principal">
++                <li><a href="index.html">Home</a></li>
++                <li><a href="productos.html">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html" class="activo">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
++                <li><a href="nosotros.html">Nosotros</a></li>
++                <li><a href="blogs.html">Blogs</a></li>
++                <li><a href="contacto.html">Contacto</a></li>
++            </ul>
++            <div class="acciones-usuario">
++                <a href="login.html">Iniciar sesión</a>
++                <a href="registro.html">Registrar usuario</a>
++                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
++            </div>
++        </nav>
+     </header>
+-    <main style="padding:20px; max-width:1000px; margin:auto;">
++
++    <main style="padding:20px; max-width:1000px; margin:20px auto;">
+         <h1>Gestión de Pedidos (MongoDB)</h1>
++        <p>Cada pedido guarda dentro de sí mismo sus líneas de detalle (colección <code>pedidos</code>).</p>
+         <table style="width:100%; border-collapse: collapse;">
+-            <thead><tr style="background:#eee;"><th>ID</th><th>Cliente</th><th>Estado</th><th>Total</th></tr></thead>
+-            <tbody id="lista-pedidos"></tbody>
++            <thead><tr style="background:#eee;"><th>ID</th><th>Cliente</th><th>Fecha</th><th>Productos</th><th>Estado</th><th>Total</th></tr></thead>
++            <tbody id="lista-pedidos"><tr><td colspan="6" style="padding:10px;">Cargando...</td></tr></tbody>
+         </table>
+     </main>
++
++    <footer>
++        <p>&copy; 2026 Distribuidora Gas El Volcán - Chillán, Ñuble</p>
++    </footer>
++
++    <script src="js/api.js"></script>
++    <script src="js/carrito.js"></script>
++    <script src="js/sesion.js"></script>
+     <script src="js/pedidos.js"></script>
+ </body>
+-</html>
+\ No newline at end of file
++</html>
+diff --git a/producto-detalle.html b/producto-detalle.html
+index 139c8ad..3ac6f6a 100644
+--- a/producto-detalle.html
++++ b/producto-detalle.html
+@@ -9,7 +9,7 @@
+ <body>
+ 
+     <header>
+-        <nav>        
++        <nav>
+             <div class="logo">
+                 <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                     <img src="img/logo.jpg" alt="Logo Gas El Volcán" style="height: 70px; width: auto; object-fit: contain; border-radius: 4px;">
+@@ -17,15 +17,16 @@
+                 </a>
+             </div>
+             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+-            <label for="menu-toggle" class="menu-toggle-btn">☰</label>
++            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+             <ul class="menu-principal">
+                 <li><a href="index.html">Home</a></li>
+-                <li><a href="productos.html">Productos</a></li>
++                <li><a href="productos.html" class="activo">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
+                 <li><a href="nosotros.html">Nosotros</a></li>
+                 <li><a href="blogs.html">Blogs</a></li>
+                 <li><a href="contacto.html">Contacto</a></li>
+             </ul>
+-
+             <div class="acciones-usuario">
+                 <a href="login.html">Iniciar sesión</a>
+                 <a href="registro.html">Registrar usuario</a>
+@@ -38,11 +39,12 @@
+ 
+         <div id="detalleProducto"></div>
+ 
+-        <h2>Productos relacionados</h2>
++        <h2 id="tituloRelacionados" hidden>Productos relacionados</h2>
+         <div id="grid-relacionados"></div>
+     </main>
+     <footer>
+         <p>&copy; 2026 Distribuidora Gas El Volcán - Chillán, Ñuble</p>    </footer>
++    <script src="js/api.js"></script>
+     <script src="js/productos-data.js"></script>
+     <script src="js/carrito.js"></script>
+     <script src="js/sesion.js"></script>
+diff --git a/productos.html b/productos.html
+index 1605333..77622a0 100644
+--- a/productos.html
++++ b/productos.html
+@@ -16,14 +16,15 @@
+                 </a>
+             </div>
+             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+-            <label for="menu-toggle" class="menu-toggle-btn">☰</label>
++            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+             <ul class="menu-principal">
+                 <li><a href="index.html">Home</a></li>
+                 <li><a href="productos.html" class="activo">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
+                 <li><a href="nosotros.html">Nosotros</a></li>
+                 <li><a href="blogs.html">Blogs</a></li>
+                 <li><a href="contacto.html">Contacto</a></li>
+-                
+             </ul>
+             <div class="acciones-usuario">
+                 <a href="login.html">Iniciar sesión</a>
+@@ -43,6 +44,7 @@
+     <footer>
+         <p>&copy; 2026 Distribuidora Gas El Volcán - Chillán, Ñuble</p>    </footer>
+ 
++    <script src="js/api.js"></script>
+     <script src="js/productos-data.js"></script>
+     <script src="js/carrito.js"></script>
+     <script src="js/sesion.js"></script>
+diff --git a/registro.html b/registro.html
+index 7227e36..f24d05d 100644
+--- a/registro.html
++++ b/registro.html
+@@ -17,18 +17,17 @@
+                     <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
+                 </a>
+             </div>
+-
+             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+             <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+-
+             <ul class="menu-principal">
+                 <li><a href="index.html">Home</a></li>
+                 <li><a href="productos.html">Productos</a></li>
++                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
++                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
+                 <li><a href="nosotros.html">Nosotros</a></li>
+                 <li><a href="blogs.html">Blogs</a></li>
+                 <li><a href="contacto.html">Contacto</a></li>
+             </ul>
+-
+             <div class="acciones-usuario">
+                 <a href="login.html">Iniciar sesión</a>
+                 <a href="registro.html">Registrar usuario</a>
+diff --git a/server.cjs b/server.cjs
+index 4faa786..ffa2c42 100644
+--- a/server.cjs
++++ b/server.cjs
+@@ -1,21 +1,48 @@
++// =====================================================================
++// server.cjs  -  API de Distribuidora Gas El Volcán (Express + MongoDB)
++// EP3 BDY1103
++//
++// Esta versión corrige las fallas encontradas en las pruebas:
++//   1. Las acciones que modifican datos (editar/crear/borrar productos, ver pedidos
++//      e historial) ahora exigen iniciar sesión como personal (Administrador/Vendedor).
++//   2. Ya NO se salta las reglas de validación de la base (se quitó bypassDocumentValidation):
++//      si alguien intenta guardar stock o precio negativo, MongoDB lo rechaza.
++//   3. El historial se guarda en el MISMO formato que usa nuestra base
++//      (codigo, campo, valor_anterior, valor_nuevo, usuario, fecha_cambio).
++//   4. El panel de administración y el carrito leen y escriben en MongoDB
++//      (antes usaban datos guardados en el navegador).
++//   5. Nuevo: POST /api/pedidos crea un pedido real descontando el stock con control.
++//
++// Recordatorio: MongoDB no tiene triggers. Lo que en Oracle hacía el trigger
++// (guardar el historial al cambiar stock o precio) aquí lo hace este programa.
++// =====================================================================
++
+ const express = require('express');
+ const mongoose = require('mongoose');
+ const cors = require('cors');
++const crypto = require('crypto');
+ 
+ const app = express();
+ const PORT = 5000;
++// Si no se define MONGO_URL se usa la base local de siempre.
++const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017/gas_volcan';
+ 
+-app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'], allowedHeaders: ['Content-Type'] }));
++app.use(cors({
++  origin: '*',
++  methods: ['GET', 'POST', 'PUT', 'DELETE'],
++  allowedHeaders: ['Content-Type', 'Authorization']
++}));
+ app.use(express.json());
+ 
+ // Conexión a MongoDB
+-mongoose.connect('mongodb://localhost:27017/gas_volcan')
++mongoose.connect(MONGO_URL)
+   .then(() => console.log('✅ Conectado a MongoDB: gas_volcan'))
+   .catch(err => console.error('❌ Error de conexión:', err.message));
+ 
+ // --- MODELOS ---
++// Las lecturas usan estos modelos. Las escrituras usan ".collection" (el driver nativo),
++// así MongoDB aplica las reglas de validación que creamos en el script 01.
+ 
+-// Modelo de Producto
+ const productoSchema = new mongoose.Schema({
+   _id: String,
+   nombre: String,
+@@ -28,118 +55,351 @@ const productoSchema = new mongoose.Schema({
+ }, { collection: 'productos', strict: false });
+ const Producto = mongoose.model('Producto', productoSchema);
+ 
+-// Modelo de Historial
+ const historialSchema = new mongoose.Schema({}, { strict: false, collection: 'historial_productos' });
+ const Historial = mongoose.model('Historial', historialSchema);
+ 
+-// Modelo de Cliente (Corregido)
+-const clienteSchema = new mongoose.Schema({_id: Number}, { strict: false, collection: 'clientes' });
++const clienteSchema = new mongoose.Schema({ _id: Number }, { strict: false, collection: 'clientes' });
+ const Cliente = mongoose.model('Cliente', clienteSchema);
+ 
+-// Modelo de Pedidos (CORREGIDO: nombre distinto)
+-const pedidoSchema = new mongoose.Schema({_id: Number}, { strict: false, collection: 'pedidos' });
++const pedidoSchema = new mongoose.Schema({ _id: Number }, { strict: false, collection: 'pedidos' });
+ const Pedidos = mongoose.model('Pedidos', pedidoSchema);
+ 
+-// --- ENDPOINTS ---
++// --- ERRORES CONTROLADOS ---
++// Sirve para devolver un mensaje claro al navegador (400, 401, 403, 404, 409).
++class ErrorNegocio extends Error {
++  constructor(status, mensaje) {
++    super(mensaje);
++    this.status = status;
++  }
++}
+ 
+-// Obtener todos los productos
+-app.get('/api/productos', async (req, res) => {
+-  try {
+-    const productos = await Producto.find();
+-    res.json(productos);
+-  } catch (error) {
+-    res.status(500).json({ error: error.message });
++// --- SESIÓN DEL PERSONAL (login) ---
++// Cuentas del personal. En un sistema real irían en una colección con la contraseña cifrada.
++const CUENTAS_STAFF = [
++  { correo: 'admin@duoc.cl', password: 'admin', nombre: 'Admin Gas El Volcán', rol: 'Administrador' },
++  { correo: 'vendedor@duoc.cl', password: 'vende', nombre: 'Carlos Repartidor', rol: 'Vendedor' }
++];
++const DURACION_SESION_MS = 8 * 60 * 60 * 1000; // 8 horas
++const sesiones = new Map(); // token -> { correo, nombre, rol, expira }
++
++// POST /api/login  { correo, password }  ->  { token, nombre, rol, correo }
++app.post('/api/login', (req, res) => {
++  const { correo, password } = req.body || {};
++  const cuenta = CUENTAS_STAFF.find(c =>
++    typeof correo === 'string' && c.correo === correo.trim().toLowerCase() && c.password === password);
++  if (!cuenta) throw new ErrorNegocio(401, 'Correo o contraseña incorrectos para una cuenta del personal.');
++
++  const token = crypto.randomBytes(24).toString('hex');
++  sesiones.set(token, { correo: cuenta.correo, nombre: cuenta.nombre, rol: cuenta.rol, expira: Date.now() + DURACION_SESION_MS });
++  res.json({ token, correo: cuenta.correo, nombre: cuenta.nombre, rol: cuenta.rol });
++});
++
++// Middleware: deja pasar solo a quien trae un token válido (y, si se indica, con uno de los roles permitidos).
++function requerirStaff(...rolesPermitidos) {
++  return (req, res, next) => {
++    const cabecera = req.headers.authorization || '';
++    const token = cabecera.startsWith('Bearer ') ? cabecera.slice(7) : '';
++    const sesion = sesiones.get(token);
++    if (!sesion || sesion.expira < Date.now()) {
++      sesiones.delete(token);
++      throw new ErrorNegocio(401, 'Debes iniciar sesión como personal para realizar esta acción.');
++    }
++    if (rolesPermitidos.length > 0 && !rolesPermitidos.includes(sesion.rol)) {
++      throw new ErrorNegocio(403, 'Tu rol (' + sesion.rol + ') no tiene permiso para esta acción.');
++    }
++    req.usuario = sesion;
++    next();
++  };
++}
++
++// --- AYUDAS DE VALIDACIÓN ---
++// Solo se comprueba que sea un número. Que no sea negativo lo decide la BASE DE DATOS con su regla de validación
++// (minimum: 0 en el script 01), no este programa.
++const esNumero = (v) => typeof v === 'number' && Number.isFinite(v);
++const quitarPrefijoImg = (ruta) => String(ruta).trim().replace(/^img\//, '');
++
++// Convierte lo que manda el navegador (nombres simples) a las rutas del documento de MongoDB.
++// Solo se aceptan estos campos; cualquier otro se ignora.
++function armarCambiosProducto(body) {
++  const set = {};
++  const unset = {};
++
++  if (body.nombre !== undefined) {
++    if (typeof body.nombre !== 'string' || body.nombre.trim() === '') throw new ErrorNegocio(400, 'El nombre es obligatorio.');
++    set.nombre = body.nombre.trim();
++  }
++  if (body.descripcion !== undefined) set.descripcion = String(body.descripcion).trim();
++  if (body.categoria !== undefined) set.categoria = body.categoria;
++  if (body.unidad !== undefined) set.unidad = body.unidad;
++
++  const numericos = [
++    ['precioResidencial', 'precios.residencial', 'El precio residencial'],
++    ['precioComercial', 'precios.comercial', 'El precio comercial'],
++    ['stock', 'stock', 'El stock'],
++    ['stockCritico', 'stock_critico', 'El stock crítico']
++  ];
++  for (const [campoEntrada, campoMongo, etiqueta] of numericos) {
++    if (body[campoEntrada] === undefined) continue;
++    if (!esNumero(body[campoEntrada])) throw new ErrorNegocio(400, etiqueta + ' debe ser un número.');
++    set[campoMongo] = body[campoEntrada];
+   }
++
++  if (body.imagen !== undefined) {
++    const img = quitarPrefijoImg(body.imagen);
++    if (img === '') unset.imagen = ''; // sin imagen = el campo no existe
++    else set.imagen = img;
++  }
++  return { set, unset };
++}
++
++// --- PRODUCTOS ---
++
++// Obtener todos los productos (público: es el catálogo de la tienda)
++app.get('/api/productos', async (req, res) => {
++  const productos = await Producto.find().sort({ _id: 1 });
++  res.json(productos);
+ });
+ 
+-// Obtener un producto por código
++// Obtener un producto por código (público)
+ app.get('/api/productos/:codigo', async (req, res) => {
+-  try {
+-    const producto = await Producto.findById(req.params.codigo);
+-    if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
+-    res.json(producto);
+-  } catch (error) {
+-    res.status(500).json({ error: error.message });
++  const producto = await Producto.findById(req.params.codigo);
++  if (!producto) throw new ErrorNegocio(404, 'Producto no encontrado');
++  res.json(producto);
++});
++
++// Crear un producto (solo Administrador).
++// insertOne SIN bypass: si falta un dato o no cumple las reglas, MongoDB lo rechaza (error 121).
++app.post('/api/productos', requerirStaff('Administrador'), async (req, res) => {
++  const b = req.body || {};
++  if (typeof b.codigo !== 'string' || b.codigo.trim().length < 3) {
++    throw new ErrorNegocio(400, 'El código es obligatorio y debe tener al menos 3 caracteres.');
+   }
++  const { set, unset } = armarCambiosProducto(b);
++  const doc = {
++    _id: b.codigo.trim(),
++    nombre: set.nombre,
++    descripcion: set.descripcion,
++    categoria: set.categoria,
++    unidad: set.unidad,
++    precios: { residencial: set['precios.residencial'], comercial: set['precios.comercial'] },
++    stock: set.stock,
++    stock_critico: set.stock_critico !== undefined ? set.stock_critico : 0
++  };
++  if (set.imagen) doc.imagen = set.imagen;
++  if (doc.descripcion === undefined) delete doc.descripcion;
++
++  await Producto.collection.insertOne(doc); // si el código ya existe -> error 11000 (409)
++  res.status(201).json(await Producto.findById(doc._id));
+ });
+ 
+-// ACTUALIZAR un producto CON auditoría
+-app.put('/api/productos/:codigo', async (req, res) => {
+-  try {
+-    const { codigo } = req.params;
+-    const datosNuevos = req.body;
++// Editar un producto (Administrador o Vendedor) con auditoría.
++// 1) findOneAndUpdate cambia el producto y devuelve cómo estaba ANTES (en una sola operación).
++// 2) Por cada campo auditable que cambió (stock, precio residencial, precio comercial)
++//    se guarda un registro en historial_productos con el formato de nuestra base.
++app.put('/api/productos/:codigo', requerirStaff('Administrador', 'Vendedor'), async (req, res) => {
++  const { codigo } = req.params;
++  const { set, unset } = armarCambiosProducto(req.body || {});
++  if (Object.keys(set).length === 0 && Object.keys(unset).length === 0) {
++    throw new ErrorNegocio(400, 'No se envió ningún dato para cambiar.');
++  }
+ 
+-    const anterior = await Producto.findById(codigo);
+-    if (!anterior) return res.status(404).json({ error: 'Producto no encontrado' });
++  const operacion = {};
++  if (Object.keys(set).length > 0) operacion.$set = set;
++  if (Object.keys(unset).length > 0) operacion.$unset = unset;
+ 
+-    await Producto.collection.updateOne(
+-      { _id: codigo },
+-      { $set: datosNuevos },
+-      { bypassDocumentValidation: true }
+-    );
++  // Sin bypassDocumentValidation: las reglas del script 01 se respetan (ej.: stock >= 0).
++  const anterior = await Producto.collection.findOneAndUpdate(
++    { _id: codigo },
++    operacion,
++    { returnDocument: 'before' }
++  );
++  if (!anterior) throw new ErrorNegocio(404, 'Producto no encontrado');
+ 
+-    const actualizado = await Producto.findById(codigo);
++  // Comparar antes y después solo en lo que se auditaba en Oracle.
++  const auditables = [
++    { campo: 'STOCK', ruta: 'stock', antes: anterior.stock, despues: set.stock },
++    { campo: 'PRECIO_RESIDENCIAL', ruta: 'precios.residencial', antes: anterior.precios && anterior.precios.residencial, despues: set['precios.residencial'] },
++    { campo: 'PRECIO_COMERCIAL', ruta: 'precios.comercial', antes: anterior.precios && anterior.precios.comercial, despues: set['precios.comercial'] }
++  ];
++  const registros = auditables
++    .filter(a => a.despues !== undefined && a.despues !== a.antes)
++    .map(a => ({
++      codigo,
++      campo: a.campo,
++      valor_anterior: a.antes,
++      valor_nuevo: a.despues,
++      usuario: req.usuario.correo,
++      fecha_cambio: new Date()
++    }));
++  if (registros.length > 0) await Historial.collection.insertMany(registros);
+ 
+-        // Auditoría (con try-catch separado)
++  res.json(await Producto.findById(codigo));
++});
++
++// Eliminar un producto (solo Administrador).
++// Los pedidos antiguos NO se ven afectados: cada línea del pedido guarda su propia copia del nombre y el precio.
++app.delete('/api/productos/:codigo', requerirStaff('Administrador'), async (req, res) => {
++  const r = await Producto.collection.deleteOne({ _id: req.params.codigo });
++  if (r.deletedCount === 0) throw new ErrorNegocio(404, 'Producto no encontrado');
++  res.json({ ok: true });
++});
++
++// --- CLIENTES ---
++// Datos personales: solo personal autenticado.
++app.get('/api/clientes', requerirStaff(), async (req, res) => {
++  res.json(await Cliente.find().sort({ _id: 1 }).lean());
++});
++
++// --- PEDIDOS ---
++
++// Ver pedidos (personal). Cada pedido trae dentro sus líneas de detalle.
++app.get('/api/pedidos', requerirStaff(), async (req, res) => {
++  res.json(await Pedidos.find().sort({ _id: 1 }).lean());
++});
++
++// Siguiente número libre (MongoDB no tiene secuencias como Oracle: se busca el mayor _id y se suma 1).
++async function siguienteId(coleccion) {
++  const ultimo = await coleccion.find({}, { projection: { _id: 1 } }).sort({ _id: -1 }).limit(1).toArray();
++  return ultimo.length > 0 ? ultimo[0]._id + 1 : 1;
++}
++
++// Inserta un documento con _id numérico; si dos personas piden el mismo número a la vez, reintenta.
++async function insertarConIdNuevo(coleccion, documentoSinId) {
++  for (let intento = 1; intento <= 5; intento++) {
++    const _id = await siguienteId(coleccion);
+     try {
+-      await Historial.collection.insertOne({
+-        fecha: new Date(),
+-        codigo_producto: codigo,              // ✅ Corregido (guión bajo, no "zens")
+-        tipo_operacion: "EDICION_WEB",
+-        valor_anterior: { 
+-          nombre: anterior.nombre, 
+-          precio: anterior.precios?.residencial, 
+-          stock: anterior.stock 
+-        },
+-        valor_nuevo: { 
+-          nombre: actualizado.nombre, 
+-          precio: actualizado.precios?.residencial, 
+-          stock: actualizado.stock 
+-        }
+-      }, { bypassDocumentValidation: true }); // ✅ Como segundo argumento
+-      console.log('✅ Auditoría guardada');
+-    } catch (histError) {
+-      console.warn('⚠️ No se pudo guardar en historial:', histError.message);
++      await coleccion.insertOne({ _id, ...documentoSinId });
++      return _id;
++    } catch (e) {
++      if (e.code !== 11000 || intento === 5) throw e;
+     }
++  }
++}
+ 
+-    res.json(actualizado);
+-  } catch (e) {
+-    console.error('❌ Error:', e.message);
+-    res.status(500).json({ error: e.message });
++// Busca al cliente por su correo; si no existe todavía, crea su ficha en la colección clientes.
++async function buscarOCrearCliente(datos) {
++  const correo = String(datos.correo || '').trim().toLowerCase();
++  if (!correo.includes('@')) throw new ErrorNegocio(400, 'Falta el correo del cliente.');
++
++  const existente = await Cliente.collection.findOne({ 'contacto.email': correo });
++  if (existente) return existente;
++
++  if (datos.run) {
++    const porRun = await Cliente.collection.findOne({ 'cuenta_web.run': datos.run });
++    if (porRun) return porRun;
+   }
+-});
+ 
+-// Obtener clientes
+-app.get('/api/clientes', async (req, res) => {
+-  try {
+-    const clientes = await Cliente.find().lean();
+-    res.json(clientes);
+-  } catch (error) {
+-    res.status(500).json({ error: error.message });
++  const contacto = { email: correo };
++  if (datos.direccion) contacto.direccion = String(datos.direccion);
++  if (datos.telefono) contacto.telefono = String(datos.telefono);
++  const nuevo = {
++    nombre: String(datos.nombre || correo).trim(),
++    tipo_cliente: 'RESIDENCIAL',
++    contacto
++  };
++  if (datos.run) nuevo.cuenta_web = { run: String(datos.run), tipo_usuario: 'Cliente' };
++
++  const _id = await insertarConIdNuevo(Cliente.collection, nuevo);
++  return { _id, ...nuevo };
++}
++
++// Crear un pedido desde el carrito (botón "Pagar").
++// Body: { cliente: { correo, nombre, run, direccion, telefono }, items: [ { codigo, cantidad } ] }
++// Equivale al flujo del script 06 (crearPedido + agregarProducto), pero en una sola llamada:
++//   - por cada producto se descuenta el stock SOLO si alcanza (filtro stock >= cantidad);
++//   - si algún producto no alcanza, se devuelve el stock ya descontado y no se crea el pedido
++//     (sin transacciones, esa "marcha atrás" la hace el programa);
++//   - se guarda el pedido con sus líneas dentro y el historial de cada cambio de stock.
++app.post('/api/pedidos', async (req, res) => {
++  const { cliente: datosCliente, items } = req.body || {};
++  if (!datosCliente) throw new ErrorNegocio(400, 'Faltan los datos del cliente.');
++  if (!Array.isArray(items) || items.length === 0) throw new ErrorNegocio(400, 'El carrito está vacío.');
++
++  // Juntar cantidades por código y validarlas
++  const cantidades = new Map();
++  for (const it of items) {
++    if (!it || typeof it.codigo !== 'string' || !Number.isInteger(it.cantidad) || it.cantidad < 1 || it.cantidad > 1000) {
++      throw new ErrorNegocio(400, 'Cada producto debe tener un código y una cantidad entera de 1 o más.');
++    }
++    cantidades.set(it.codigo, (cantidades.get(it.codigo) || 0) + it.cantidad);
+   }
+-});
+ 
+-// Obtener pedidos
+-app.get('/api/pedidos', async (req, res) => {
++  const cliente = await buscarOCrearCliente(datosCliente);
++  const tipoCliente = cliente.tipo_cliente || 'RESIDENCIAL';
++
++  const descontados = []; // para poder devolver el stock si algo falla
++  const lineas = [];
++  const registrosHistorial = [];
++  let total = 0;
++  let idPedido;
++
+   try {
+-    const pedidos = await Pedidos.find().lean();
+-    res.json(pedidos);
++    for (const [codigo, cantidad] of cantidades) {
++      // Descuenta solo si alcanza y devuelve cómo estaba el producto antes de descontar.
++      const antes = await Producto.collection.findOneAndUpdate(
++        { _id: codigo, stock: { $gte: cantidad } },
++        { $inc: { stock: -cantidad } },
++        { returnDocument: 'before' }
++      );
++      if (!antes) {
++        const actual = await Producto.collection.findOne({ _id: codigo });
++        if (!actual) throw new ErrorNegocio(400, 'El producto ' + codigo + ' no existe.');
++        throw new ErrorNegocio(409, 'Stock insuficiente de ' + actual.nombre + ': disponible ' + actual.stock + ', pediste ' + cantidad + '.');
++      }
++      descontados.push({ codigo, cantidad });
++
++      const precio = tipoCliente === 'COMERCIAL' ? antes.precios.comercial : antes.precios.residencial;
++      lineas.push({ codigo, nombre: antes.nombre, cantidad, precio_unitario: precio, subtotal: precio * cantidad });
++      total += precio * cantidad;
++      registrosHistorial.push({
++        codigo, campo: 'STOCK', valor_anterior: antes.stock, valor_nuevo: antes.stock - cantidad,
++        usuario: String(datosCliente.correo).trim().toLowerCase(), fecha_cambio: new Date()
++      });
++    }
++
++    idPedido = await insertarConIdNuevo(Pedidos.collection, {
++      cliente: { id_cliente: cliente._id, nombre: cliente.nombre, tipo_cliente: tipoCliente },
++      fecha_pedido: new Date(),
++      estado: 'PENDIENTE',
++      lineas,
++      total,
++      historial_estados: []
++    });
+   } catch (error) {
+-    res.status(500).json({ error: error.message });
++    // Marcha atrás: devolver el stock que ya se había descontado
++    for (const d of descontados) {
++      await Producto.collection.updateOne({ _id: d.codigo }, { $inc: { stock: d.cantidad } });
++    }
++    throw error;
+   }
++
++  await Historial.collection.insertMany(registrosHistorial);
++  res.status(201).json({ id_pedido: idPedido, total, estado: 'PENDIENTE', lineas });
+ });
+ 
+-// Obtener historial
+-app.get('/api/historial', async (req, res) => {
+-  try {
+-    const historial = await Historial.find().sort({ fecha: -1 });
+-    res.json(historial);
+-  } catch (error) {
+-    res.status(500).json({ error: error.message });
++// --- HISTORIAL ---
++// Registro de cambios de stock y precios (solo personal). Lo más reciente primero.
++app.get('/api/historial', requerirStaff(), async (req, res) => {
++  const historial = await Historial.collection.find().sort({ fecha_cambio: -1 }).limit(300).toArray();
++  res.json(historial);
++});
++
++// --- MANEJO DE ERRORES ---
++// Traduce los errores de MongoDB y los controlados a respuestas JSON claras.
++app.use((err, req, res, next) => {
++  if (err instanceof ErrorNegocio) return res.status(err.status).json({ error: err.message });
++  if (err.code === 121) {
++    return res.status(400).json({
++      error: 'La base de datos rechazó el cambio porque no cumple sus reglas de validación (por ejemplo stock o precio negativo, o categoría no permitida).'
++    });
+   }
++  if (err.code === 11000) return res.status(409).json({ error: 'Ya existe un registro con ese código.' });
++  if (err instanceof SyntaxError) return res.status(400).json({ error: 'El cuerpo de la petición no es un JSON válido.' });
++  console.error('❌ Error:', err.message);
++  res.status(500).json({ error: err.message });
+ });
+ 
+ // Iniciar el servidor
+ app.listen(PORT, '0.0.0.0', () => {
+   console.log(`🚀 Servidor en http://localhost:${PORT}`);
+-});
+\ No newline at end of file
++});
