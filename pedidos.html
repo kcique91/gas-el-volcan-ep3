@@ -2,20 +2,54 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedidos - Gas El Volcán</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
     <header>
-        <nav><ul class="menu-principal"><li><a href="index.html">Home</a></li><li><a href="pedidos.html" class="activo">Pedidos</a></li><li><a href="historial.html">Historial</a></li></ul></nav>
+        <nav>
+            <div class="logo">
+                <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                    <img src="img/logo.jpg" alt="Logo Gas El Volcán" style="height: 70px; width: auto; object-fit: contain; border-radius: 4px;">
+                    <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
+                </a>
+            </div>
+            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+            <ul class="menu-principal">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li data-solo-staff style="display:none"><a href="pedidos.html" class="activo">Pedidos</a></li>
+                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            <div class="acciones-usuario">
+                <a href="login.html">Iniciar sesión</a>
+                <a href="registro.html">Registrar usuario</a>
+                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+            </div>
+        </nav>
     </header>
-    <main style="padding:20px; max-width:1000px; margin:auto;">
+
+    <main style="padding:20px; max-width:1000px; margin:20px auto;">
         <h1>Gestión de Pedidos (MongoDB)</h1>
+        <p>Cada pedido guarda dentro de sí mismo sus líneas de detalle (colección <code>pedidos</code>).</p>
         <table style="width:100%; border-collapse: collapse;">
-            <thead><tr style="background:#eee;"><th>ID</th><th>Cliente</th><th>Estado</th><th>Total</th></tr></thead>
-            <tbody id="lista-pedidos"></tbody>
+            <thead><tr style="background:#eee;"><th>ID</th><th>Cliente</th><th>Fecha</th><th>Productos</th><th>Estado</th><th>Total</th></tr></thead>
+            <tbody id="lista-pedidos"><tr><td colspan="6" style="padding:10px;">Cargando...</td></tr></tbody>
         </table>
     </main>
+
+    <footer>
+        <p>&copy; 2026 Distribuidora Gas El Volcán - Chillán, Ñuble</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/sesion.js"></script>
     <script src="js/pedidos.js"></script>
 </body>
 </html>

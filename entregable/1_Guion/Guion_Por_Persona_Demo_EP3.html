@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>[hidden]{display:none!important}</style>
+<title>Guion demo MongoDB</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: barra fija con una pestaña por persona; cada paso es una tarjeta con Haces, frase en globo, Aparece y Qué significa. */
+:root {
+  --bg: #F1F3F8;
+  --surface: #FFFFFF;
+  --ink: #152033;
+  --muted: #566378;
+  --line: #DCE2EC;
+  --line-strong: #B9C3D3;
+  --haces: #ECEFF4;
+  --aparece: #FFF0C7;
+  --aparece-ink: #6E4A00;
+  --pasa: #FFE2D0;
+  --pasa-ink: #8E3A0B;
+  --rosa: #2563C9;  --rosa-soft: #E7F0FD;  --rosa-mark: #C7DCFA;  --rosa-ink: #173F86;
+  --cris: #17794E;  --cris-soft: #E2F4EB;  --cris-mark: #BCE5D1;  --cris-ink: #0F5636;
+  --dani: #6B3FD0;  --dani-soft: #EEE8FC;  --dani-mark: #D8CBF5;  --dani-ink: #4A2796;
+  --neutral: #3A475C; --neutral-soft: #E9EDF3; --neutral-mark: #D2D9E4; --neutral-ink: #26324A;
+  --on-c: #FFFFFF;
+  --shadow: 0 1px 2px rgba(20,32,51,.06), 0 6px 18px rgba(20,32,51,.05);
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D121A; --surface: #161D29; --ink: #E7ECF5; --muted: #9AA7BC; --line: #263143; --line-strong: #3A4960;
+    --haces: #1F2837; --aparece: #3A3014; --aparece-ink: #F3D58A; --pasa: #3D2417; --pasa-ink: #FFC6A3;
+    --rosa: #7DAAFF; --rosa-soft: #17284A; --rosa-mark: #27437A; --rosa-ink: #BDD3FF;
+    --cris: #5CD09B; --cris-soft: #12301F; --cris-mark: #1F5238; --cris-ink: #A5EBC9;
+    --dani: #AC8BFF; --dani-soft: #2A1E4D; --dani-mark: #43318A; --dani-ink: #D3C3FF;
+    --neutral: #AAB6CB; --neutral-soft: #1F2837; --neutral-mark: #33415A; --neutral-ink: #D6DEEC;
+    --on-c: #0B1220; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.3);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D121A; --surface: #161D29; --ink: #E7ECF5; --muted: #9AA7BC; --line: #263143; --line-strong: #3A4960;
+  --haces: #1F2837; --aparece: #3A3014; --aparece-ink: #F3D58A; --pasa: #3D2417; --pasa-ink: #FFC6A3;
+  --rosa: #7DAAFF; --rosa-soft: #17284A; --rosa-mark: #27437A; --rosa-ink: #BDD3FF;
+  --cris: #5CD09B; --cris-soft: #12301F; --cris-mark: #1F5238; --cris-ink: #A5EBC9;
+  --dani: #AC8BFF; --dani-soft: #2A1E4D; --dani-mark: #43318A; --dani-ink: #D3C3FF;
+  --neutral: #AAB6CB; --neutral-soft: #1F2837; --neutral-mark: #33415A; --neutral-ink: #D6DEEC;
+  --on-c: #0B1220; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.3);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.55; margin: 0; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 20; background: var(--surface); }
+h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+p { margin: 0; }
+code { font-family: var(--font-mono); font-size: .86em; background: var(--haces); color: var(--ink); padding: .12em .42em; border-radius: 6px; overflow-wrap: anywhere; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--c, var(--rosa)); outline-offset: 2px; border-radius: 6px; }
+
+.wrap { max-width: 1180px; margin-inline: auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Personas */
+.p-rosa { --c: var(--rosa); --soft: var(--rosa-soft); --mark: var(--rosa-mark); --cink: var(--rosa-ink); }
+.p-cris { --c: var(--cris); --soft: var(--cris-soft); --mark: var(--cris-mark); --cink: var(--cris-ink); }
+.p-dani { --c: var(--dani); --soft: var(--dani-soft); --mark: var(--dani-mark); --cink: var(--dani-ink); }
+.p-all  { --c: var(--neutral); --soft: var(--neutral-soft); --mark: var(--neutral-mark); --cink: var(--neutral-ink); }
+
+/* Cabecera fija */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; background: var(--surface); border-bottom: 1px solid var(--line); }
+.top .wrap { padding-block: 12px 10px; display: grid; gap: 10px; }
+.brand { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.brand h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.01em; }
+.brand span { color: var(--muted); font-size: .85rem; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tab { text-decoration: none; font-weight: 600; font-size: .92rem; padding: 7px 14px; border-radius: 999px; background: var(--haces); color: var(--ink); border: 2px solid transparent; display: inline-flex; align-items: center; gap: 8px; }
+.tab i { width: 10px; height: 10px; border-radius: 50%; background: var(--c, var(--neutral)); display: inline-block; }
+.tab:hover { border-color: var(--line-strong); }
+.tab[aria-current="page"] { background: var(--c, var(--neutral)); color: var(--on-c); }
+.tab[aria-current="page"] i { background: var(--on-c); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.toggle { font: inherit; font-size: .85rem; font-weight: 600; cursor: pointer; padding: 6px 12px; border-radius: 8px; border: 1.5px solid var(--line-strong); background: transparent; color: var(--ink); }
+.toggle[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* Paneles */
+main { padding-block: 22px 56px; }
+.panel { display: none; }
+.panel.on { display: block; }
+
+/* Cabecera de persona */
+.who { background: var(--c); color: var(--on-c); border-radius: 20px; padding: 24px 24px 22px; display: grid; gap: 12px; margin-bottom: 18px; }
+.who h2 { font-size: clamp(2rem, 6vw, 2.9rem); font-weight: 800; letter-spacing: -.02em; }
+.who .sub { font-size: 1.08rem; font-weight: 500; max-width: 60ch; }
+.who .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.pill { font-size: .82rem; font-weight: 600; padding: 4px 12px; border-radius: 999px; background: color-mix(in srgb, var(--on-c) 20%, transparent); }
+
+/* Pasos */
+.steps { display: grid; gap: 16px; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: grid; gap: 12px; box-shadow: var(--shadow); }
+.step-head { display: flex; align-items: center; gap: 12px; }
+.num { flex: none; width: 38px; height: 38px; border-radius: 50%; background: var(--c); color: var(--on-c); font-family: var(--font-display); font-weight: 800; display: grid; place-items: center; font-size: 1.05rem; }
+.step-head h3 { font-size: 1.18rem; font-weight: 700; flex: 1; min-width: 0; }
+.done { display: inline-flex; align-items: center; gap: 7px; font-size: .82rem; font-weight: 600; color: var(--muted); cursor: pointer; flex: none; }
+.done input { width: 18px; height: 18px; accent-color: var(--c); margin: 0; }
+.step.is-done { border-color: var(--c); }
+.step.is-done .done { color: var(--cink); }
+
+.row { border-radius: 12px; padding: 10px 14px; display: grid; gap: 3px; }
+.tag { font-size: .7rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+.haces { background: var(--haces); }
+.haces .tag { color: var(--muted); }
+.aparece { background: var(--aparece); color: var(--aparece-ink); }
+.aparece .tag { color: var(--aparece-ink); opacity: .85; }
+
+.say { position: relative; background: var(--soft); border-radius: 18px 18px 18px 4px; padding: 14px 18px 16px; display: grid; gap: 6px; }
+.say .tag { color: var(--cink); }
+.say .txt { font-size: 1.08rem; line-height: 1.65; }
+.say b { background: var(--mark); color: var(--cink); font-weight: 600; padding: .04em .28em; border-radius: 5px; }
+.cover .say .txt { filter: blur(8px); user-select: none; }
+.cover .say:not(.shown) { cursor: pointer; }
+.cover .say:not(.shown)::after { content: "Toca para ver"; position: absolute; inset: 0; display: grid; place-items: center; font-weight: 700; color: var(--cink); }
+.cover .say.shown .txt { filter: none; }
+
+.terms { border: 1.5px dashed var(--line-strong); border-radius: 14px; padding: 12px 14px; display: grid; gap: 10px; }
+.terms > .tag { color: var(--cink); }
+.nomean .terms { display: none; }
+dl { margin: 0; display: grid; gap: 8px; }
+.term { display: grid; gap: 1px; }
+.term dt { font-weight: 700; color: var(--cink); font-size: .95rem; }
+.term dd { margin: 0; font-size: .94rem; color: var(--ink); }
+.ask { background: var(--soft); border-radius: 12px; }
+.ask summary { cursor: pointer; padding: 10px 14px; font-weight: 600; font-size: .94rem; color: var(--cink); list-style: none; display: flex; gap: 8px; }
+.ask summary::-webkit-details-marker { display: none; }
+.ask summary::before { content: "?"; flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--c); color: var(--on-c); display: grid; place-items: center; font-size: .8rem; font-weight: 800; margin-top: 1px; }
+.ask p { padding: 0 14px 12px 44px; font-size: .94rem; }
+
+.step.pass { background: var(--pasa); border-color: transparent; }
+.step.pass .num { background: var(--pasa-ink); color: var(--pasa); font-size: 1.2rem; }
+.step.pass .say { background: var(--surface); }
+.step.pass .haces { background: color-mix(in srgb, var(--surface) 55%, transparent); }
+.step.pass h3 { color: var(--pasa-ink); }
+
+/* Inicio */
+.lead { font-size: 1.15rem; max-width: 60ch; margin-bottom: 18px; }
+.flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 26px; }
+.flow a { text-decoration: none; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: grid; gap: 4px; box-shadow: var(--shadow); position: relative; min-width: 0; }
+.flow a:hover { border-color: var(--c); }
+.flow .n { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: var(--c); }
+.flow .t { font-size: .92rem; color: var(--muted); }
+.flow .s { font-size: .8rem; font-weight: 700; color: var(--cink); background: var(--soft); border-radius: 999px; padding: 3px 10px; justify-self: start; margin-top: 4px; }
+h2.sec { font-size: 1.45rem; font-weight: 800; margin: 28px 0 12px; }
+.legend { display: grid; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+.legend .row { grid-template-columns: 120px 1fr; align-items: center; gap: 12px; }
+.legend .row .tag { align-self: center; }
+.ready { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; display: grid; gap: 6px; box-shadow: var(--shadow); min-width: 0; }
+.card h4 { font-size: 1.05rem; font-weight: 800; color: var(--cink); }
+.card.wide { grid-column: 1 / -1; }
+.note { background: var(--soft); border-radius: 14px; padding: 14px 16px; }
+.note + .note { margin-top: 10px; }
+
+/* Glosario */
+.search { width: 100%; font: inherit; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line-strong); background: var(--surface); color: var(--ink); margin-bottom: 8px; }
+.gcat { margin-top: 22px; }
+.gcat h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.gcat h3::before { content: ""; width: 12px; height: 12px; border-radius: 4px; background: var(--c); }
+.gl { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.gl .term { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; min-width: 0; }
+.empty { color: var(--muted); padding: 16px 0; }
+
+/* Ensayar */
+.stages { display: grid; gap: 10px; counter-reset: st; }
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px 14px 62px; position: relative; box-shadow: var(--shadow); counter-increment: st; }
+.stage::before { content: counter(st); position: absolute; left: 14px; top: 12px; width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; }
+.qa-group { margin-top: 18px; display: grid; gap: 8px; }
+.qa-group h3 { font-size: 1.1rem; font-weight: 800; color: var(--cink); }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; }
+
+
+/* Dos columnas por paso: lo que haces y dices a la izquierda, lo que significa a la derecha */
+.cols { display: contents; }
+.col-a, .col-b { display: grid; gap: 12px; min-width: 0; align-content: start; }
+@media (min-width: 860px), print {
+  .step { grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); column-gap: 18px; row-gap: 12px; align-items: start; }
+  .step-head { grid-column: 1 / -1; }
+  .step.solo .col-a { grid-column: 1 / -1; }
+  .step.solo .col-a { grid-template-columns: minmax(0, 1fr); }
+  .gl { grid-template-columns: repeat(3, 1fr); }
+  .qa-group { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  .qa-group > h3 { grid-column: 1 / -1; }
+  .steps { gap: 14px; }
+}
+
+@media (max-width: 640px) {
+  .flow, .ready, .gl { grid-template-columns: 1fr; }
+  .legend .row { grid-template-columns: 1fr; gap: 4px; }
+  .who { padding: 20px 18px; border-radius: 16px; }
+  .step { padding: 14px; border-radius: 16px; }
+  .step-head { flex-wrap: wrap; }
+  .done { margin-left: 50px; }
+  .ask p { padding-left: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+@media print {
+  body { background: #fff; color: #111; font-size: 12px; }
+  body::before, .top, .controls, .done, .search, .bar { display: none !important; }
+  .panel { display: block !important; margin-bottom: 0; }
+  .panel.p-rosa, .panel.p-cris, .panel.p-dani { break-before: page; }
+  .who { break-after: avoid; padding: 16px 20px; margin-bottom: 12px; border-radius: 12px; }
+  .who h2 { font-size: 2rem; }
+  .steps { display: block; }
+  .step { display: block; padding: 12px; border-radius: 12px; margin-bottom: 10px; break-inside: auto; }
+  .step-head { break-after: avoid; margin-bottom: 8px; }
+  .cols { display: block; column-count: 2; column-gap: 16px; column-fill: balance; }
+  .step.solo .cols { column-count: 1; }
+  .col-a, .col-b { display: contents; }
+  .cols > .col-a > *, .cols > .col-b > * { margin-bottom: 8px; }
+  .row, .say, .terms, .term, .ask { break-inside: avoid; }
+  .terms { display: block; }
+  .terms .term { margin-top: 8px; }
+  h2.sec { margin: 14px 0 8px; font-size: 1.2rem; }
+  .lead { font-size: 1rem; margin-bottom: 10px; }
+  .flow { margin-bottom: 12px; }
+  .flow a { padding: 10px; }
+  .legend { padding: 10px; gap: 5px; }
+  .card { padding: 8px 12px; }
+  .ready { gap: 8px; }
+  .note { padding: 8px 12px; }
+  .note + .note { margin-top: 6px; }
+  main { padding-block: 0; }
+  .haces { break-after: avoid; }
+  .say .txt { font-size: 1rem; line-height: 1.55; }
+  .term dd, .ask p, .ask summary { font-size: .88rem; }
+  .card, .stage { break-inside: avoid; }
+  .step, .card, .stage { box-shadow: none; }
+  .who { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .say, .haces, .aparece, .step.pass, .say b, .num, .tag { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .cover .say .txt { filter: none !important; }
+  .cover .say::after { display: none !important; }
+  .nomean .terms { display: grid !important; }
+}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><h1>Guion de la demo</h1><span>MongoDB · Distribuidora Gas El Volcán</span></div>
+    <nav class="tabs" aria-label="Secciones">
+      <a class="tab p-all" href="#inicio" data-tab="inicio"><i></i>Inicio</a>
+      <a class="tab p-rosa" href="#rosa" data-tab="rosa"><i></i>Rosa</a>
+      <a class="tab p-cris" href="#cristopher" data-tab="cristopher"><i></i>Cristopher</a>
+      <a class="tab p-dani" href="#daniel" data-tab="daniel"><i></i>Daniel</a>
+      <a class="tab p-all" href="#glosario" data-tab="glosario"><i></i>Glosario</a>
+      <a class="tab p-all" href="#ensayar" data-tab="ensayar"><i></i>Ensayar</a>
+    </nav>
+    <div class="controls" id="controls" hidden>
+      <button class="toggle" id="t-cover" type="button" aria-pressed="false">Tapar lo que dices</button>
+      <button class="toggle" id="t-mean" type="button" aria-pressed="false">Ocultar qué significa</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="app"></main>
+
+<script>
+/* ---------- Diccionario de términos (se usa en los pasos y en el Glosario) ---------- */
+var T = {
+  relacional: ["Modelo relacional", "Los datos van en tablas con filas y columnas fijas, y las tablas se conectan entre sí con claves. Es el modelo de Oracle, el que usamos en el EP1 y el EP2.", "Modelo de datos"],
+  join: ["JOIN", "Una consulta que une filas de dos o más tablas por un campo en común, por ejemplo el id del cliente, para ver los datos juntos.", "Modelo de datos"],
+  documento: ["Documento", "Un registro que guarda sus campos y valores juntos, y puede llevar listas y otros datos adentro. Se escribe parecido a JSON.", "Modelo de datos"],
+  json: ["JSON y BSON", "JSON es un formato de texto para guardar datos como pares campo: valor. MongoDB lo guarda en una versión binaria llamada BSON.", "Modelo de datos"],
+  coleccion: ["Colección", "El equivalente a una tabla: un grupo de documentos. Nuestra base tiene cuatro: productos, clientes, pedidos e historial_productos.", "Modelo de datos"],
+  bd: ["Base de datos (gas_volcan)", "El contenedor de todo nuestro proyecto en MongoDB. Dentro van las colecciones.", "Modelo de datos"],
+  id: ["_id", "El campo que identifica de forma única a cada documento, como una clave primaria. En productos es el código (CL001), y en pedidos y clientes es el número.", "Modelo de datos"],
+  esquema: ["Esquema flexible", "No todos los documentos necesitan los mismos campos. Sirve para un catálogo con productos muy distintos. Por defecto MongoDB no obliga a una estructura fija.", "Modelo de datos"],
+  normalizar: ["Normalizar", "Separar los datos en varias tablas para no repetirlos. Es lo que hace Oracle con el pedido: cliente, pedido, detalle y producto van por separado.", "Modelo de datos"],
+  embebido: ["Embebido", "Guardar los datos relacionados dentro del mismo documento. Las líneas del pedido viven adentro del pedido, así que se leen de una vez y sin JOIN.", "Modelo de datos"],
+  referenciado: ["Referenciado", "Guardar solo el id del otro documento y buscarlo aparte. El pedido guarda el id del cliente, como una clave foránea.", "Modelo de datos"],
+  copia: ["Copia del momento", "Un dato que se copia al guardar y después no se actualiza solo. El pedido guarda el nombre y el tipo del cliente de ese día, aunque el cliente cambie más adelante.", "Modelo de datos"],
+  validacion: ["Validación ($jsonSchema)", "Reglas que MongoDB revisa cada vez que se guarda un documento: campos obligatorios, tipos y valores permitidos. En nuestra base el stock no puede ser menor que 0.", "Reglas de la base"],
+  check: ["CHECK de Oracle", "Una restricción de Oracle que impide guardar datos que no cumplen una condición. La validación de MongoDB hace lo mismo.", "Reglas de la base"],
+  trigger: ["Trigger", "Código que la base ejecuta sola cuando algo cambia. En Oracle, un trigger anotaba el historial. En nuestra base MongoDB no hay triggers: lo anota el programa.", "Reglas de la base"],
+  atomica: ["Operación atómica", "Se hace completa o no se hace nada. Cuando todo está en un solo documento, MongoDB guarda los cambios juntos.", "Reglas de la base"],
+  replica: ["Transacción y replica set", "Una transacción hace varios cambios en documentos distintos como si fueran uno solo. En MongoDB necesita un replica set (varios servidores con copias), que nuestra base local no tiene.", "Reglas de la base"],
+  integridad: ["Integridad y consistencia", "Que los datos sean correctos y coherentes entre sí. Oracle lo protege con restricciones y triggers dentro de la base. En MongoDB queda más en manos del programa.", "Reglas de la base"],
+  crud: ["CRUD", "Las cuatro operaciones básicas con datos: Create (crear), Read (leer), Update (actualizar) y Delete (borrar).", "Comandos"],
+  insertone: ["insertOne e insertMany", "insertOne agrega un documento. insertMany agrega varios de una vez.", "Comandos"],
+  find: ["find y findOne", "Leen datos. find devuelve todos los documentos que cumplan el filtro y findOne devuelve solo uno.", "Comandos"],
+  filtro: ["Filtro", "La condición que dice qué documentos queremos. Va entre llaves, por ejemplo { _id: 7 }.", "Comandos"],
+  gtlt: ["$gt y $lt", "Operadores de comparación: $gt es mayor que (greater than) y $lt es menor que (less than). Los operadores siempre empiezan con $.", "Comandos"],
+  sort: ["sort", "Ordena el resultado. Con -1 va de mayor a menor y con 1 de menor a mayor.", "Comandos"],
+  aggregate: ["aggregate", "Una consulta en etapas, llamada pipeline: primero filtra, después agrupa y calcula. Sirve para sumar y contar, parecido a GROUP BY y SUM en SQL.", "Comandos"],
+  update: ["updateOne y updateMany", "Modifican documentos que ya existen. updateOne cambia uno y updateMany cambia varios.", "Comandos"],
+  set: ["$set", "Cambia o agrega solo el campo indicado y no toca el resto del documento.", "Comandos"],
+  inc: ["$inc", "Suma o resta un número al valor que ya tiene el campo. Con -3 baja el stock en 3.", "Comandos"],
+  push: ["$push", "Agrega un elemento al final de una lista (arreglo) dentro del documento.", "Comandos"],
+  counts: ["matchedCount y modifiedCount", "matchedCount es cuántos documentos cumplieron el filtro. modifiedCount es cuántos se cambiaron de verdad.", "Comandos"],
+  del: ["deleteOne y deleteMany", "Borran documentos. deleteOne borra uno y deleteMany borra todos los que cumplan el filtro.", "Comandos"],
+  deletedcount: ["deletedCount", "Cuántos documentos se borraron con ese comando.", "Comandos"],
+  logico: ["Borrado lógico", "En vez de borrar un pedido real, se le cambia el estado (por ejemplo, a cancelado). Así no se pierde el registro de la venta.", "Comandos"],
+  findoneupdate: ["findOneAndUpdate", "Busca un documento y lo actualiza en un solo paso. Es lo que usa la página cuando editamos un producto.", "Comandos"],
+  peticion: ["Petición", "Lo que el navegador le manda al servidor para pedir o cambiar datos.", "La página web"],
+  servidor: ["Servidor (API)", "Un programa hecho con Node y Express que recibe las peticiones de la página y habla con MongoDB. La página nunca se conecta directo a la base.", "La página web"],
+  mongoose: ["Mongoose", "La librería que usa el servidor para conectarse a MongoDB y ejecutar las operaciones.", "La página web"],
+  verbos: ["GET, POST, PUT y DELETE", "Los verbos HTTP. GET lee (find), POST crea (insertOne), PUT actualiza (findOneAndUpdate) y DELETE borra (deleteOne). Son el CRUD visto desde la página.", "La página web"],
+  network: ["Network (F12)", "Herramienta del navegador que muestra cada petición que hace la página. Status 200 quiere decir que salió bien, y 201 que se creó algo.", "La página web"],
+  compass: ["Compass y mongosh", "Compass es el programa con pantalla para ver la base. mongosh es la consola donde escribimos los comandos. Los bloques se pegan en esa consola.", "Herramientas"]
+};
+
+/* ---------- Pasos de cada persona ---------- */
+var PEOPLE = {
+  rosa: {
+    key: "rosa", cls: "p-rosa", name: "Rosa", title: "El caso, el modelo y el Create",
+    intro: "Abres la demo con las dos diapositivas, sigues en Compass con el modelo y cierras con el Create. Al terminar, le pasas el teclado a Cristopher.",
+    flow: "Empieza la demo · pasa a Cristopher",
+    steps: [
+      { t: "Presentar el caso", h: "Muestras la diapositiva 1, <em>Del modelo relacional al de documentos</em>.",
+        d: "“Buenas, profesor. Somos Daniel, Rosa y Cristopher y llevamos a MongoDB el negocio de Distribuidora Gas El Volcán, que en el EP1 y el EP2 hicimos en Oracle. La diferencia principal: en Oracle los datos van en <b>tablas con columnas fijas</b> y un pedido se reparte en dos tablas que se unen con <b>JOIN</b>. En MongoDB los datos van en <b>documentos parecidos a JSON</b> y el pedido guarda sus <b>líneas adentro</b>.”",
+        a: "Diapositiva 1", terms: ["relacional", "join", "documento", "json"],
+        q: [["¿Qué diferencia hay entre una tabla y una colección?", "La tabla tiene columnas fijas y todas las filas tienen los mismos campos. La colección guarda documentos, y cada uno puede tener campos distintos."]] },
+      { t: "El mismo pedido en los dos modelos", h: "Pasas a la diapositiva 2, <em>El mismo pedido en Oracle y en MongoDB</em>.",
+        d: "“Tomamos el pedido 7. En Oracle está repartido en <b>cuatro tablas</b> y hay que unirlas con <b>tres JOIN</b> para verlo completo: salen dos líneas, $90.000 y $24.000, y el total, $114.000, se calcula sumando. En MongoDB ese mismo pedido es <b>un solo documento</b> con todo adentro, y ahora lo vemos en vivo.”",
+        a: "Diapositiva 2: la consulta SQL con 3 JOIN y sus dos filas, y el documento de MongoDB",
+        terms: [["Pedido 7", "Es un pedido de Distribuidora El Sol Ltda., ya ENTREGADO. En Oracle está repartido en cuatro tablas: pedido_v, cliente_v, detalle_pedido_v y producto_v."], "normalizar"],
+        q: [["¿Entonces MongoDB es mejor que Oracle?", "No siempre. Leer un pedido es más simple en MongoDB, pero Oracle protege mejor la integridad con restricciones y triggers. Depende de lo que se necesite."]] },
+      { t: "Entrar a la base", h: "Pegas el paso 3 del script (R1): <code>show collections</code>",
+        d: "“Ahora entramos a MongoDB. La base se llama <b>gas_volcan</b> y tiene <b>cuatro colecciones</b>: productos, clientes, pedidos e historial_productos.”",
+        a: "Las cuatro colecciones", terms: ["bd", "coleccion", "compass"], q: [] },
+      { t: "Un pedido con sus líneas adentro", h: "Pegas el paso 4 del script: <code>db.pedidos.findOne({ _id: 7 })</code>",
+        d: "“Este es el pedido 7: <b>un solo documento con sus líneas adentro</b>. Eso se llama <b>embebido</b>. En Oracle eran dos tablas y un JOIN. Cada línea guarda el precio del momento de la venta.”",
+        a: "El pedido 7 con dos líneas y total 114000",
+        terms: [["findOne", "Busca y devuelve un solo documento. Lo que va entre llaves es el filtro: aquí, el documento cuyo _id es 7."], "id", "embebido", ["Precio del momento", "Cada línea guarda el precio que tenía el producto ese día, por si cambia después. Igual que en Oracle."]],
+        q: [["¿Por qué las líneas van embebidas?", "Porque siempre se leen junto con el pedido, son pocas y no cambian por separado. Así una sola consulta trae todo."]] },
+      { t: "El cliente, por referencia", h: "Pegas el paso 5 del script (R11): <code>db.clientes.findOne({ _id: 7 })</code>",
+        d: "“El cliente, en cambio, está <b>referenciado</b>: el pedido guarda solo su id y una copia del nombre. La regla fue <b>embeber lo que se lee junto y es pequeño</b>, y <b>referenciar lo que cambia a menudo o crece sin límite</b>.”",
+        a: "El cliente 7 con su contacto", terms: ["referenciado", "copia"],
+        q: [["¿Cuándo conviene embeber y cuándo referenciar?", "Se embebe lo que se lee junto y es pequeño. Se referencia lo que cambia a menudo o puede crecer sin límite, como el historial de cambios de un producto."]] },
+      { t: "Crear datos (C1 a C4)", h: "Pegas el paso 6 del script (C1 a C4 juntos), sin explicar cada uno.",
+        d: "“Ahora el Create. <b>insertOne</b> agrega un documento e <b>insertMany</b> agrega varios a la vez. Con estos comandos creo un producto, dos clientes y dos pedidos de prueba. El más importante es el <b>pedido 100</b>, la venta del EP2: un cliente comercial, 3 cilindros de 5 kg y 2 mangueras, $25.000, <b>todo en un solo documento</b>.”",
+        a: "Las confirmaciones de los inserts",
+        terms: ["crud", "insertone", [ "Datos de prueba", "C1 a C4 crean un producto, dos clientes y dos pedidos de prueba. Se pegan igual aunque no se expliquen uno por uno, porque el Delete los usa después."], ["Pedido 100", "La venta del EP2: un cliente comercial compra 3 cilindros de 5 kg y 2 mangueras, por $25.000, todo dentro de un solo documento."]],
+        q: [["¿Cuál es la diferencia entre insertOne e insertMany?", "insertOne guarda un solo documento. insertMany guarda una lista de documentos con una sola orden."]] },
+      { t: "La regla que rechaza datos malos (C5)", h: "Pegas el paso 7 del script (C5): el stock negativo.",
+        d: "“MongoDB no exige esquema, pero la colección tiene <b>reglas</b>. Esto equivale al <b>CHECK de Oracle</b>: intento guardar un stock negativo y lo <b>rechaza</b>.”",
+        a: "Error: Document failed validation (stock mínimo 0, valor -5)", terms: ["validacion", "check", "esquema"],
+        q: [["Si MongoDB no exige estructura, ¿cómo evitan datos incorrectos?", "Usamos validación $jsonSchema en cada colección. Es el equivalente a los CHECK de Oracle y rechaza, por ejemplo, un stock negativo."]] },
+      { pass: true, to: "Cristopher", t: "Pasar la palabra a Cristopher", h: "Le pasas el teclado a Cristopher.",
+        d: "“Con eso quedaron el modelo y el Create. <b>Cristopher</b> les muestra cómo se lee y se actualiza.”" }
+    ]
+  },
+  cristopher: {
+    key: "cristopher", cls: "p-cris", name: "Cristopher", title: "El Read y el Update",
+    intro: "Recibes el teclado de Rosa, muestras cómo se lee y cómo se actualiza, y le pasas el teclado a Daniel.",
+    flow: "Recibe de Rosa · pasa a Daniel",
+    steps: [
+      { t: "Leer con filtros (R5)", h: "Pegas el paso 1 del script (R5): <code>$gt</code> y <code>$lt</code>.",
+        d: "“Ahora el Read. <b>find</b> recibe un filtro, y los operadores de comparación <b>$gt</b> y <b>$lt</b> significan mayor que y menor que: pido los productos entre 5.000 y 13.000 pesos, de mayor a menor.”",
+        a: "6 productos, de 12.990 a 6.500 pesos", terms: ["find", "filtro", "gtlt", "sort"],
+        q: [["¿Cómo sería esa consulta en SQL?", "Un SELECT con WHERE precio mayor que 5.000 y menor que 13.000, y ORDER BY precio DESC."]] },
+      { t: "Un pedido completo, sin JOIN (R10)", h: "Pegas el paso 2 del script (R10): <code>findOne({ _id: 100 })</code>",
+        d: "“Aquí traigo un <b>pedido completo</b>, con el cliente y las líneas, en un solo comando y <b>sin JOIN</b>.”",
+        a: "El pedido 100 con sus dos líneas y total 25000",
+        terms: [["Sin JOIN", "El cliente y las líneas están dentro del pedido, así que un solo findOne trae todo. En Oracle hacían falta varias tablas unidas."]],
+        q: [["Si el cliente cambia su nombre, ¿qué pasa con el pedido?", "El pedido conserva el nombre de ese día, porque es una copia del momento de la venta. El cliente se actualiza en su propia colección."]] },
+      { t: "Total vendido (R17)", h: "Pegas el paso 3 del script (R17): <code>aggregate</code>.",
+        d: "“Y este es el total de los pedidos entregados: el mismo <b>147.480 pesos</b> de nuestra función de Oracle, pero con <b>una sola consulta</b>.”",
+        a: "<code>total_entregado: 147480, pedidos: 3</code>",
+        terms: [["aggregate", "Una consulta en etapas, llamada pipeline. Aquí $match deja solo los pedidos ENTREGADOS y $group suma sus totales y los cuenta."], ["Función de Oracle", "fn_total_ventas_entregadas era una función de Oracle que sumaba las ventas entregadas. Da el mismo resultado, 147.480."]],
+        q: [["¿Qué hace aggregate que no haga find?", "find solo filtra y devuelve documentos. aggregate además puede agrupar y calcular, como sumar o contar, parecido a GROUP BY y SUM en SQL."]] },
+      { t: "Cambiar un campo (U1)", h: "Pegas el paso 4 del script (U1): <code>$set</code>.",
+        d: "“Ahora el Update. <b>$set</b> cambia solo un campo. Como MongoDB <b>no tiene triggers</b>, dejo el cambio anotado en el historial.”",
+        a: "matchedCount 1, modifiedCount 1, y el registro del historial", terms: ["update", "set", "trigger", "counts"],
+        q: [["¿Qué pasa si el programa se olvida de anotar el historial?", "Es una desventaja de este modelo: en Oracle el trigger lo hacía siempre. En MongoDB depende de que el programa lo escriba."]] },
+      { t: "Descontar stock (U2)", h: "Pegas el paso 5 del script (U2): <code>$inc</code> con guarda.",
+        d: "“Descuento el stock de la venta con <b>$inc</b>. El filtro exige que <b>haya stock suficiente</b>.”",
+        a: "CL001 pasa de 80 a 77 y MG001 de 80 a 78",
+        terms: ["inc", ["Guarda en el filtro", "Una condición extra en el filtro (que el stock alcance) para que solo descuente cuando hay suficiente."]], q: [] },
+      { t: "Sin stock suficiente (U3)", h: "Pegas el paso 6 del script (U3): sin stock suficiente.",
+        d: "“Ahora intento vender 10 detectores de gas teniendo solo 2: el filtro <b>no encuentra nada</b> y no descuenta. En Oracle esto era el <b>error ORA-20032</b>.”",
+        a: "matchedCount 0 y modifiedCount 0; el detector de gas sigue con stock 2",
+        terms: [["Qué pasó", "El filtro pide un stock de al menos 10 y el detector de gas tiene 2, así que no encuentra el producto y no descuenta nada."], ["ORA-20032", "El error que lanzaba nuestro trigger de Oracle cuando no había stock. En MongoDB el programa nota que matchedCount es 0 y avisa."]],
+        q: [["¿Cómo se entera el programa de que no había stock?", "Mira matchedCount: si es 0, el filtro no encontró un producto con stock suficiente y el programa muestra el aviso."]] },
+      { t: "Estado e historial a la vez (U4)", h: "Pegas el paso 7 del script (U4): <code>$set</code> y <code>$push</code>.",
+        d: "“Cambio el estado del pedido y anoto el cambio en su historial, en <b>una sola operación atómica</b>.”",
+        a: "El pedido 100 en EN_CAMINO con una entrada en historial_estados",
+        terms: ["push", "atomica", [ "Filtro con estado PENDIENTE", "El filtro pide estado PENDIENTE para no cambiar un pedido que ya no lo está."]],
+        q: [["¿Y si el historial estuviera en otra colección?", "Cambiar dos documentos distintos a la vez necesita una transacción, y MongoDB solo la ofrece con replica set. Por eso el historial de estados va dentro del pedido."]] },
+      { pass: true, to: "Daniel", t: "Pasar la palabra a Daniel", h: "Le pasas el teclado a Daniel.",
+        d: "“Con eso quedó el Update. <b>Daniel</b> les muestra cómo se borra y cómo se ve lo mismo desde la página.”" }
+    ]
+  },
+  daniel: {
+    key: "daniel", cls: "p-dani", name: "Daniel", title: "El Delete, la página web y la conclusión",
+    intro: "Recibes el teclado de Cristopher, muestras el Delete en Compass, luego lo mismo desde la página (solo GET y PUT) y cierras con la conclusión.",
+    flow: "Recibe de Cristopher · cierra la demo",
+    steps: [
+      { t: "Borrar (D1 a D3)", h: "Pegas el paso 1 del script (D1, D2 y D3 juntos).",
+        d: "“Ahora el Delete. <b>deleteOne</b> borra un documento: el producto de prueba y el pedido de prueba. <b>deleteMany</b> borra todos los que cumplen el filtro: los dos clientes de prueba. En un negocio real un pedido <b>no se borra, se marca con un estado</b>.”",
+        a: "<code>deletedCount</code> de cada comando: 1, 2 y 1",
+        terms: ["del", ["deletedCount", "Cuántos documentos se borraron: 1 (el producto), 2 (los dos clientes) y 1 (el pedido de prueba)."], "logico"],
+        q: [["¿Por qué no se borran los pedidos?", "Porque son el registro de una venta y de dinero. Se marcan con un estado y se conservan."]] },
+      { t: "Comprobar los datos (D5)", h: "Pegas el paso 2 del script (D5): los conteos.",
+        d: "“Quedaron los datos originales más la venta del pedido 100.”",
+        a: "14 productos, 9 clientes y 11 pedidos, y el pedido 100 en EN_CAMINO",
+        terms: [["Conteos", "Cuentan cuántos documentos hay en cada colección. Si todo salió bien quedan los originales (14 productos, 9 clientes y 10 pedidos) más el pedido 100."]], q: [] },
+      { t: "La página: leer con GET", h: "Recargas la página Productos con F12 abierto. Haces clic en la fila <code>productos</code> de Network, pestaña Headers.",
+        d: "“Ahora lo mismo, pero desde la página. La página <b>no habla directo con MongoDB</b>: el navegador manda una <b>petición al servidor</b> y el servidor ejecuta la operación en MongoDB. Al cargar los productos se hace un <b>GET</b>, que es leer.”",
+        a: "Request Method GET, Status 200", terms: ["peticion", "servidor", "network", "verbos"],
+        q: [["¿Cómo se conecta la página con MongoDB?", "Por un servidor hecho con Express y Mongoose. El navegador manda peticiones HTTP al servidor y el servidor ejecuta la operación en MongoDB."]] },
+      { t: "La página: actualizar con PUT", h: "Entras a Admin, Productos, Editar. Cambias el precio del Cilindro GLP 5 kg (CL001) y guardas. Haces clic en la fila nueva de Network. Después pegas el paso 4 del script en la consola: <code>db.productos.findOne({ _id: \"CL001\" })</code>.",
+        d: "“Si edito el precio, se hace un <b>PUT</b>, que es actualizar; en MongoDB es un <b>findOneAndUpdate</b>. La prueba de que es real es que <b>el precio nuevo aparece en Compass</b>. Lo mismo pasa con <b>POST</b>, que crea, y <b>DELETE</b>, que borra.”",
+        a: "PUT, Status 200. En la consola, el precio nuevo", terms: ["findoneupdate", "mongoose", [ "La prueba en Compass", "Si el precio nuevo aparece en Compass, queda demostrado que el cambio llegó a MongoDB y no solo a la pantalla."]],
+        q: [["¿Qué diferencia hay entre POST y PUT?", "POST crea algo nuevo y PUT cambia algo que ya existe."]] },
+      { t: "Conclusión", h: "Miras al profesor.",
+        d: "“Con MongoDB leer un pedido es <b>más simple</b> y el catálogo es <b>flexible</b>. A cambio, el historial, la protección del stock y la consistencia entre colecciones <b>pasaron a depender del programa</b>. Por eso <b>un modelo no reemplaza al otro</b>: Oracle conviene para el stock y las finanzas, y MongoDB para lo que se lee como un objeto completo, como el catálogo web y los pedidos.”",
+        a: null, terms: ["esquema", "integridad"],
+        q: [["¿Cuándo usarían cada una?", "Oracle para stock y finanzas, donde la integridad va primero. MongoDB para lo que se lee como un objeto completo, como el catálogo web y los pedidos."]] },
+      { t: "Cerrar la demo", h: "Miras al profesor.",
+        d: "“Eso es todo de nuestra parte. Quedamos atentos a sus preguntas.”", a: null, terms: [], q: [] }
+    ]
+  }
+};
+var ORDER = ["rosa", "cristopher", "daniel"];
+var NAME_TAB = { rosa: "rosa", cristopher: "cristopher", daniel: "daniel" };
+
+/* ---------- Utilidades ---------- */
+var app = document.getElementById("app");
+var STORE = "guion-ep3-hecho";
+var done = {};
+try { done = JSON.parse(localStorage.getItem(STORE) || "{}") || {}; } catch (e) { done = {}; }
+function saveDone() { try { localStorage.setItem(STORE, JSON.stringify(done)); } catch (e) {} }
+
+function termHTML(t) {
+  var x = typeof t === "string" ? T[t] : t;
+  return '<div class="term"><dt>' + x[0] + '</dt><dd>' + x[1] + '</dd></div>';
+}
+
+function stepHTML(p, s, i) {
+  var id = p.key + "-" + (i + 1);
+  var isDone = !!done[id];
+  var head = '<div class="step-head"><span class="num">' + (s.pass ? "→" : (i + 1)) + '</span><h3>' + s.t + '</h3>' +
+    (s.pass ? '' : '<label class="done"><input type="checkbox" data-done="' + id + '"' + (isDone ? " checked" : "") + '> Ensayado</label>') + '</div>';
+  var haces = '<div class="row haces"><span class="tag">Haces</span><div>' + s.h + '</div></div>';
+  var say = '<div class="say" tabindex="0"><span class="tag">' + (s.pass ? p.name + " a " + s.to + " dice" : p.name + " dice") + '</span><p class="txt">' + s.d + '</p></div>';
+  var ap = s.a ? '<div class="row aparece"><span class="tag">Aparece</span><div>' + s.a + '</div></div>' : "";
+  var terms = "";
+  if (s.terms && s.terms.length) {
+    terms = '<div class="terms"><span class="tag">Qué significa</span><dl>' + s.terms.map(termHTML).join("") + '</dl></div>';
+  }
+  var qs = (s.q || []).map(function (q) {
+    return '<details class="ask"><summary>Si te preguntan: ' + q[0] + '</summary><p>' + q[1] + '</p></details>';
+  }).join("");
+  return '<article class="step' + (s.pass ? " pass" : "") + (isDone ? " is-done" : "") + (terms ? "" : " solo") + '" id="' + id + '"><div class="cols">' + head + '<div class="col-a">' + haces + say + ap + qs + '</div>' + (terms ? '<div class="col-b">' + terms + '</div>' : '') + '</div></article>';
+}
+
+function personPanel(p) {
+  var n = p.steps.filter(function (s) { return !s.pass; }).length;
+  return '<section class="panel ' + p.cls + '" id="panel-' + p.key + '" aria-label="' + p.name + '">' +
+    '<div class="who"><h2>' + p.name + '</h2><p class="sub">' + p.title + '. ' + p.intro + '</p>' +
+    '<div class="meta"><span class="pill">' + n + ' pasos</span><span class="pill">' + p.flow + '</span><span class="pill" id="prog-' + p.key + '"></span></div></div>' +
+    '<div class="steps">' + p.steps.map(function (s, i) { return stepHTML(p, s, i); }).join("") + '</div></section>';
+}
+
+function inicioPanel() {
+  var flow = ORDER.map(function (k) {
+    var p = PEOPLE[k];
+    var n = p.steps.filter(function (s) { return !s.pass; }).length;
+    return '<a class="' + p.cls + '" href="#' + k + '"><span class="n">' + p.name + '</span><span class="t">' + p.title + '</span><span class="s">' + n + ' pasos</span></a>';
+  }).join("");
+  return '<section class="panel p-all" id="panel-inicio">' +
+    '<p class="lead">Cada uno abre su pestaña, lee sus pasos en orden y ensaya en voz alta. Los pasos de los tres forman la demo completa, uno detrás del otro.</p>' +
+    '<div class="flow">' + flow + '</div>' +
+    '<h2 class="sec">Cómo leer cada paso</h2>' +
+    '<div class="legend">' +
+      '<div class="row haces"><span class="tag">Haces</span><div>Lo que haces en pantalla: qué pegas, qué abres, qué escribes.</div></div>' +
+      '<div class="row p-rosa" style="background:var(--soft)"><span class="tag" style="color:var(--cink)">Dices</span><div>Lo que dices en voz alta, en un globo del color de cada persona. Lo importante va <b style="background:var(--mark);color:var(--cink);padding:.04em .28em;border-radius:5px;font-weight:600">marcado</b>.</div></div>' +
+      '<div class="row aparece"><span class="tag">Aparece</span><div>Lo que debe verse en pantalla. Si no sale, algo falló: avisa antes de seguir.</div></div>' +
+      '<div class="row" style="border:1.5px dashed var(--line-strong)"><span class="tag" style="color:var(--muted)">Qué significa</span><div>Explicación corta de las palabras técnicas del paso, y preguntas que podría hacer el profe con su respuesta.</div></div>' +
+      '<div class="row" style="background:var(--pasa);color:var(--pasa-ink)"><span class="tag">Pasar la palabra</span><div>El momento en que le pasas el teclado al siguiente.</div></div>' +
+    '</div>' +
+    '<h2 class="sec">Qué debe estar listo antes de empezar</h2>' +
+    '<div class="ready">' +
+      '<div class="card wide p-all"><h4>Todos</h4><p>Un solo computador: el que tiene MongoDB y la página. Compass conectado a <code>localhost:27017</code>, con la consola de mongosh abierta y el script 01 recién pegado (debe decir 14 productos, 9 clientes y 10 pedidos). Además, el script <code>00_DEMO_en_orden.js</code> abierto: ahí está todo lo que se pega en la demo, en el mismo orden de esta página y con los mismos números de paso. Nada se escribe a mano.</p></div>' +
+      '<div class="card p-rosa"><h4>Rosa</h4><p>Las 2 diapositivas abiertas, y el script en la Parte 1 (pasos 3 a 7).</p></div>' +
+      '<div class="card p-cris"><h4>Cristopher</h4><p>El script abierto en la Parte 2 (pasos 1 a 7).</p></div>' +
+      '<div class="card wide p-dani"><h4>Daniel</h4><p>El script abierto en la Parte 3 (pasos 1, 2 y 4). El servidor (<code>node server.cjs</code>) y la página (<code>npm run dev</code>) levantados, la página en <code>localhost:5173</code> con sesión de administrador, y F12 abierto en Network con Fetch/XHR, Keep log y Disable cache marcados.</p></div>' +
+    '</div>' +
+    '<h2 class="sec">Dos cosas que saber</h2>' +
+    '<div class="note p-all">Los pasos del script se pegan en orden, de arriba hacia abajo, porque cada uno usa lo que dejó el anterior. El paso 6 de Rosa (C1 a C4) se pega aunque no se explique uno por uno: crea los datos de prueba que después borra el Delete.</div>' +
+    '<div class="note p-all">Al ensayar, revisen qué muestra Compass cuando se pegan varios comandos juntos. Si solo muestra el último resultado, peguen los comandos de a uno, rápido.</div>' +
+  '</section>';
+}
+
+function glosarioPanel() {
+  var cats = {}, order = [];
+  Object.keys(T).forEach(function (k) {
+    var c = T[k][2];
+    if (!cats[c]) { cats[c] = []; order.push(c); }
+    cats[c].push(T[k]);
+  });
+  var html = order.map(function (c) {
+    return '<div class="gcat p-all" data-cat><h3>' + c + '</h3><dl class="gl">' + cats[c].map(function (x) { return termHTML(x); }).join("") + '</dl></div>';
+  }).join("");
+  return '<section class="panel p-all" id="panel-glosario">' +
+    '<div class="who"><h2>Glosario</h2><p class="sub">Todas las palabras técnicas de la demo, con una explicación corta. Si el profe pregunta qué es algo, la respuesta está aquí.</p></div>' +
+    '<label for="gq" class="tag" style="display:block;margin-bottom:6px;color:var(--muted)">Buscar una palabra</label>' +
+    '<input class="search" id="gq" type="search" placeholder="Por ejemplo: embebido, $set, GET" autocomplete="off">' +
+    '<div id="gl-body">' + html + '</div><p class="empty" id="gl-empty" hidden>No hay ninguna palabra con ese texto.</p></section>';
+}
+
+function ensayarPanel() {
+  var qa = ORDER.map(function (k) {
+    var p = PEOPLE[k], list = [];
+    p.steps.forEach(function (s) { (s.q || []).forEach(function (q) { list.push(q); }); });
+    return '<div class="qa-group ' + p.cls + '"><h3>Parte de ' + p.name + '</h3>' + list.map(function (q) {
+      return '<details class="ask"><summary>' + q[0] + '</summary><p>' + q[1] + '</p></details>';
+    }).join("") + '</div>';
+  }).join("");
+  return '<section class="panel p-all" id="panel-ensayar">' +
+    '<div class="who"><h2>Ensayar</h2><p class="sub">Cuatro etapas, en este orden. La meta es una demo de unos 10 minutos. Antes de cada ensayo completo, vuelvan a pegar el script 01 para dejar los datos limpios.</p></div>' +
+    '<div class="stages">' +
+      '<div class="stage">Cada uno ensaya solo su parte: lee sus pasos y pega los de su parte del script en Compass hasta que el resultado coincida con lo que dice Aparece. Usa el botón Tapar lo que dices para practicar sin leer.</div>' +
+      '<div class="stage">Ensayo completo con cronómetro, pasándose el teclado en los pasos de pasar la palabra.</div>' +
+      '<div class="stage">Intercambio: cada uno explica con sus palabras la parte de otro. La nota es individual y el profe puede preguntarle a cualquiera sobre cualquier bloque.</div>' +
+      '<div class="stage">Último ensayo como si fuera el real, sin leer las frases, y después repasar juntos las preguntas de abajo.</div>' +
+    '</div>' +
+    '<div class="note p-all" style="margin-top:14px">Si falta tiempo el día de la demo, se salta la parte de la página web (los pasos 3 y 4 de Daniel).</div>' +
+    '<h2 class="sec">Preguntas que podría hacer el profe</h2>' +
+    '<p>Léanlas, contesten en voz alta y recién ahí abran la respuesta.</p>' +
+    '<div class="bar"><button class="toggle" type="button" id="qa-open">Abrir todas</button><button class="toggle" type="button" id="qa-close">Cerrar todas</button></div>' +
+    qa + '</section>';
+}
+
+app.innerHTML = inicioPanel() + ORDER.map(function (k) { return personPanel(PEOPLE[k]); }).join("") + glosarioPanel() + ensayarPanel();
+
+/* ---------- Progreso ---------- */
+function updateProgress() {
+  ORDER.forEach(function (k) {
+    var p = PEOPLE[k], total = 0, n = 0;
+    p.steps.forEach(function (s, i) { if (!s.pass) { total++; if (done[k + "-" + (i + 1)]) n++; } });
+    var el = document.getElementById("prog-" + k);
+    if (el) el.textContent = n + " de " + total + " ensayados";
+  });
+}
+updateProgress();
+app.addEventListener("change", function (e) {
+  var id = e.target && e.target.getAttribute && e.target.getAttribute("data-done");
+  if (!id) return;
+  if (e.target.checked) done[id] = 1; else delete done[id];
+  var card = document.getElementById(id);
+  if (card) card.classList.toggle("is-done", e.target.checked);
+  saveDone(); updateProgress();
+});
+
+/* ---------- Tapar frases y ocultar explicaciones ---------- */
+var tCover = document.getElementById("t-cover"), tMean = document.getElementById("t-mean");
+tCover.addEventListener("click", function () {
+  var on = tCover.getAttribute("aria-pressed") !== "true";
+  tCover.setAttribute("aria-pressed", String(on));
+  document.body.classList.toggle("cover", on);
+  document.querySelectorAll(".say.shown").forEach(function (el) { el.classList.remove("shown"); });
+});
+tMean.addEventListener("click", function () {
+  var on = tMean.getAttribute("aria-pressed") !== "true";
+  tMean.setAttribute("aria-pressed", String(on));
+  document.body.classList.toggle("nomean", on);
+});
+function revealSay(el) { if (document.body.classList.contains("cover")) el.classList.toggle("shown"); }
+app.addEventListener("click", function (e) { var s = e.target.closest && e.target.closest(".say"); if (s) revealSay(s); });
+app.addEventListener("keydown", function (e) {
+  if ((e.key === "Enter" || e.key === " ") && e.target.classList && e.target.classList.contains("say") && document.body.classList.contains("cover")) {
+    e.preventDefault(); revealSay(e.target);
+  }
+});
+
+/* ---------- Glosario: búsqueda ---------- */
+function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+document.getElementById("gq").addEventListener("input", function (e) {
+  var q = norm(e.target.value.trim()), any = false;
+  document.querySelectorAll("#gl-body [data-cat]").forEach(function (cat) {
+    var shown = 0;
+    cat.querySelectorAll(".term").forEach(function (t) {
+      var ok = !q || norm(t.textContent).indexOf(q) !== -1;
+      t.hidden = !ok; if (ok) shown++;
+    });
+    cat.hidden = shown === 0; if (shown) any = true;
+  });
+  document.getElementById("gl-empty").hidden = any;
+});
+
+/* ---------- Ensayar: abrir y cerrar preguntas ---------- */
+document.getElementById("qa-open").addEventListener("click", function () { document.querySelectorAll("#panel-ensayar details").forEach(function (d) { d.open = true; }); });
+document.getElementById("qa-close").addEventListener("click", function () { document.querySelectorAll("#panel-ensayar details").forEach(function (d) { d.open = false; }); });
+
+/* ---------- Pestañas por hash ---------- */
+var VALID = ["inicio", "rosa", "cristopher", "daniel", "glosario", "ensayar"];
+function route() {
+  var h = (location.hash || "").replace("#", "");
+  if (VALID.indexOf(h) === -1) h = "inicio";
+  document.querySelectorAll(".panel").forEach(function (p) { p.classList.toggle("on", p.id === "panel-" + h); });
+  document.querySelectorAll(".tab").forEach(function (t) {
+    if (t.getAttribute("data-tab") === h) t.setAttribute("aria-current", "page"); else t.removeAttribute("aria-current");
+  });
+  document.getElementById("controls").hidden = ORDER.indexOf(h) === -1;
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>

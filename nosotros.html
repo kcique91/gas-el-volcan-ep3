@@ -64,23 +64,21 @@
                     <span class="logo-nombre" style="font-size: 1.3rem; font-weight: bold; color: var(--color-primario);">Gas El Volcán</span>
                 </a>
             </div>
-
-            <!-- Botón menú hamburguesa para celulares -->
             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
             <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
-
             <ul class="menu-principal">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="productos.html">Productos</a></li>
+                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
+                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
                 <li><a href="nosotros.html" class="activo">Nosotros</a></li>
                 <li><a href="blogs.html">Blogs</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
-
             <div class="acciones-usuario">
-              <a href="login.html">Iniciar sesión</a>
-              <a href="registro.html">Registrar usuario</a>
-              <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+                <a href="login.html">Iniciar sesión</a>
+                <a href="registro.html">Registrar usuario</a>
+                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
             </div>
         </nav>
     </header>

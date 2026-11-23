@@ -12,15 +12,22 @@
  */
 
 document.addEventListener("DOMContentLoaded", function () {
-    var acciones = document.querySelector(".acciones-usuario");
-    if (!acciones) return;
-
     var activo = null;
     try {
         activo = JSON.parse(localStorage.getItem("usuarioActivo"));
     } catch (e) {
         activo = null;
     }
+
+    // Los enlaces "Pedidos" e "Historial" del menú son solo para el personal (Administrador / Vendedor).
+    // Están en el menú de todas las páginas, pero únicamente se muestran si el personal inició sesión.
+    var esPersonal = !!(activo && (activo.rol === "Administrador" || activo.rol === "Vendedor"));
+    document.querySelectorAll("[data-solo-staff]").forEach(function (elemento) {
+        elemento.style.display = esPersonal ? "" : "none";
+    });
+
+    var acciones = document.querySelector(".acciones-usuario");
+    if (!acciones) return;
 
     if (!activo || !activo.nombre) return;
 
@@ -51,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         linkRegistro.addEventListener("click", function (e) {
             e.preventDefault();
             localStorage.removeItem("usuarioActivo");
+            localStorage.removeItem("tokenStaff"); // también se cierra la sesión del personal en el servidor
             window.location.href = "index.html";
         });
     }

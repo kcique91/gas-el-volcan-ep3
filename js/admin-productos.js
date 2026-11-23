@@ -1,23 +1,25 @@
-// Recorre el catálogo de productos (PRODUCTOS, que viene de productos-data.js y ya lee
-// desde localStorage si hay cambios guardados) y pinta una fila por cada producto en la
-// tabla del panel de administración
+// Panel de administración - Productos.
+// Los productos se leen de MongoDB (cargarCatalogo) y los cambios se guardan en MongoDB a través del servidor.
 function mostrarProductosAdmin() {
   const cuerpo = document.getElementById("cuerpoProductosAdmin");
   if (!cuerpo) return;
+
+  // Solo el Administrador puede crear y eliminar productos (el servidor también lo exige)
+  const puedeEliminar = esAdministrador();
 
   let filas = "";
 
   PRODUCTOS.forEach(function (producto) {
     filas += `
       <tr>
-        <td>${producto.codigo}</td>
-        <td>${producto.nombre}</td>
-        <td>${producto.categoria}</td>
-        <td>$${producto.precioResidencial}</td>
+        <td>${escaparHtml(producto.codigo)}</td>
+        <td>${escaparHtml(producto.nombre)}</td>
+        <td>${escaparHtml(producto.categoria)}</td>
+        <td>${formatoPesos(producto.precioResidencial)}</td>
         <td>${producto.stock}</td>
         <td>
           <button type="button" class="btn-editar" onclick="editarProducto('${producto.codigo}')">Editar</button>
-          <button type="button" class="btn-eliminar" onclick="eliminarProducto('${producto.codigo}')">Eliminar</button>
+          ${puedeEliminar ? `<button type="button" class="btn-eliminar" onclick="eliminarProducto('${producto.codigo}')">Eliminar</button>` : ""}
         </td>
       </tr>
     `;
@@ -32,17 +34,29 @@ function editarProducto(codigo) {
   window.location.href = "producto-editar.html";
 }
 
-// Elimina un producto del catálogo buscándolo por su código (no por su posición en el
-// arreglo, para que no se desordene), actualiza localStorage y vuelve a pintar la tabla
+// Elimina un producto de MongoDB. Los pedidos antiguos no se afectan: cada pedido guarda su propia copia del nombre y el precio.
 function eliminarProducto(codigo) {
   if (!confirm("¿Eliminar este producto?")) return;
 
-  PRODUCTOS = PRODUCTOS.filter(function (p) {
-    return p.codigo !== codigo;
-  });
-
-  localStorage.setItem("productos", JSON.stringify(PRODUCTOS));
-  mostrarProductosAdmin();
+  llamarApi("/productos/" + encodeURIComponent(codigo), { method: "DELETE" })
+    .then(function () {
+      return cargarCatalogo();
+    })
+    .then(mostrarProductosAdmin)
+    .catch(function (error) {
+      alert("❌ No se pudo eliminar: " + error.message);
+    });
 }
 
-mostrarProductosAdmin();
+// El botón "Nuevo Producto" es solo para el Administrador
+if (!esAdministrador()) {
+  const enlaceNuevo = document.querySelector('a[href="producto-nuevo.html"]');
+  if (enlaceNuevo) enlaceNuevo.style.display = "none";
+}
+
+cargarCatalogo()
+  .then(mostrarProductosAdmin)
+  .catch(function (error) {
+    const cuerpo = document.getElementById("cuerpoProductosAdmin");
+    if (cuerpo) cuerpo.innerHTML = '<tr><td colspan="6">No se pudo cargar desde el servidor: ' + escaparHtml(error.message) + '</td></tr>';
+  });

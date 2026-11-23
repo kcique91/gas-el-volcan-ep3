@@ -17,18 +17,16 @@
                 </a>
             </div>
             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
-            <label for="menu-toggle" class="menu-toggle-btn">☰</label>
+            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
             <ul class="menu-principal">
                 <li><a href="index.html" class="activo">Home</a></li>
                 <li><a href="productos.html">Productos</a></li>
-                <li><a href="pedidos.html">Pedidos</a></li> <!-- Nuevo -->
-                <li><a href="historial.html">Historial</a></li> <!-- Nuevo -->
+                <li data-solo-staff style="display:none"><a href="pedidos.html">Pedidos</a></li>
+                <li data-solo-staff style="display:none"><a href="historial.html">Historial</a></li>
                 <li><a href="nosotros.html">Nosotros</a></li>
                 <li><a href="blogs.html">Blogs</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
-                
             </ul>
-
             <div class="acciones-usuario">
                 <a href="login.html">Iniciar sesión</a>
                 <a href="registro.html">Registrar usuario</a>
@@ -50,6 +48,7 @@
 
     <footer>
         <p>&copy; 2026 Distribuidora Gas El Volcán - Chillán, Ñuble</p>    </footer>
+    <script src="js/api.js"></script>
     <script src="js/productos-data.js"></script>
     <script src="js/carrito.js"></script>
     <script src="js/sesion.js"></script>
